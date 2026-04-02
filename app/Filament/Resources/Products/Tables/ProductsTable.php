@@ -8,6 +8,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
+use App\Models\Category;
 use Filament\Actions\DeleteBulkAction;
 
 class ProductsTable
@@ -18,8 +19,10 @@ class ProductsTable
             ->columns([
                 ImageColumn::make('img_path')
                     ->label('')
-                    ->circular()
-                    ->disk('public'),
+                    ->square()
+                    ->visibility('public')
+                    ->disk('public')
+                    ->size(50),
 
                 TextColumn::make('name_ar')
                     ->label('المنتج')
@@ -34,7 +37,7 @@ class ProductsTable
                     ->sortable()
                     ->color('gray'),
 
-                TextColumn::make('category.name')
+                TextColumn::make('category.id')
                     ->label('Category')
                     ->badge()
                     ->color('primary')
@@ -52,7 +55,7 @@ class ProductsTable
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('category_id')
-                    ->relationship('category', 'name')
+                    ->relationship('category', 'name_ar')
                     ->label('Filter Category'),
             ])
             ->actions([

@@ -2,13 +2,13 @@
 
 namespace App\Filament\Resources\Categories\Schemas;
 
-
-use Filament\Schemas\Schema;
-use Filament\Forms\Form;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Schemas\Components\Grid;
+    use App\Models\Category;
+    use Filament\Schemas\Schema;
+    use Filament\Forms\Form;
+    use Filament\Schemas\Components\Section;
+    use Filament\Forms\Components\TextInput;
+    use Filament\Forms\Components\Textarea;
+    use Filament\Schemas\Components\Grid;
 use Illuminate\Support\Str;
 
 class CategoryForm

@@ -31,7 +31,13 @@ class ProductForm
                             ->required(),
 
                         Select::make('category_id')
-                            ->relationship('category', 'name')
+                            ->relationship('category', 'name_en')
+                            ->searchable()
+                            ->preload()
+                            ->required(),
+
+                               Select::make('category_id')
+                            ->relationship('category', 'name_en')
                             ->searchable()
                             ->preload()
                             ->required(),
