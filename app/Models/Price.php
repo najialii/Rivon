@@ -7,7 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Price extends Model
 {
     //
-    protected $fillable = ['product_id', 'price', 'wholesale_price', 'retail_price', 'wholesale_min_price'];
+    protected $fillable = [
+    'product_id',
+     'price',
+     'currency',
+      'wholesale_price', 
+      'retail_price',
+       'wholesale_min_price'];
 
     public function product()
     {

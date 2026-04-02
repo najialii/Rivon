@@ -17,54 +17,77 @@ class ProductForm
     {
         return $schema
             ->components([
-                Section::make('Product Identification')
-                    ->description('Bilingual details and classification')
-                    ->columns(2)
+                Grid::make(3)
+                    ->columnSpanFull()
                     ->schema([
-                        TextInput::make('name_ar')
-                            ->label('اسم المنتج (عربي)')
-                            ->required()
-                            ->extraInputAttributes(['dir' => 'rtl']),
+                        Grid::make(1)
+                            ->schema([
+                                Section::make('Product Identification')
+                                    ->description('Bilingual details and classification')
+                                    ->columns(2)
+                                    ->schema([
+                                        TextInput::make('name_ar')
+                                            ->label('اسم المنتج (عربي)')
+                                            ->required()
+                                            ->extraInputAttributes(['dir' => 'rtl']),
 
-                        TextInput::make('name_en')
-                            ->label('Product Name (EN)')
-                            ->required(),
+                                        TextInput::make('name_en')
+                                            ->label('Product Name (EN)')
+                                            ->required(),
 
-                        Select::make('category_id')
-                            ->relationship('category', 'name_en')
-                            ->searchable()
-                            ->preload()
-                            ->required(),
+                                        Select::make('category_id')
+                                            ->relationship('category', 'name_en')
+                                            ->searchable()
+                                            ->preload()
+                                            ->required()
+                                            ->columnSpanFull(),
+                                            Select::make('brand_id')
+    ->relationship('brand', 'name_en')
+    ->searchable()
+    ->preload()
+    ->createOptionForm([ 
+        TextInput::make('name_en')->required(),
+        TextInput::make('name_ar')->required(),
+    ])
+    ->columnSpan(1),
 
-                               Select::make('category_id')
-                            ->relationship('category', 'name_en')
-                            ->searchable()
-                            ->preload()
-                            ->required(),
+                                        TextInput::make('munit')
+                                            ->label('Measurement Unit')
+                                            ->placeholder('e.g., kg, box, pcs')
+                                            ->columnSpanFull(),
+                                    ]),
 
-                        TextInput::make('munit')
-                            ->label('Measurement Unit')
-                            ->placeholder('e.g., kg, box, pcs'),
-                    ]),
+                                Section::make('Descriptions')
+                                    ->description('Bilingual product information')
+                                    ->schema([
+                                        Textarea::make('description_ar')
+                                            ->label('الوصف (عربي)')
+                                            ->rows(5)
+                                            ->extraInputAttributes(['dir' => 'rtl']),
 
-                Section::make('Visuals & Description')
-                    ->columns(2)
-                    ->schema([
-                        FileUpload::make('img_path')
-                            ->label('Product Image')
-                            ->image()
-                            ->directory('products')
+                                        Textarea::make('description_en')
+                                            ->label('Description (EN)')
+                                            ->rows(5),
+                                    ]),
+                            ])
+                            ->columnSpan(2),
+
+                        Grid::make(1)
+                            ->schema([
+                                Section::make('Visuals')
+                                    ->description('Product imagery')
+                                    ->schema([
+                                        FileUpload::make('img_path')
+                                            ->label('Product Image')
+                                            ->image()
+                                            ->directory('products')
+                                            ->imageEditor()
+                                            ->imageEditorAspectRatios([
+                                                '1:1',
+                                            ]),
+                                    ]),
+                            ])
                             ->columnSpan(1),
-
-                        Textarea::make('description_ar')
-                            ->label('الوصف (عربي)')
-                            ->rows(5)
-                            ->extraInputAttributes(['dir' => 'rtl']),
-
-                        Textarea::make('description_en')
-                            ->label('Description (EN)')
-                            ->rows(5)
-                            ->columnSpanFull(),
                     ]),
             ]);
     }

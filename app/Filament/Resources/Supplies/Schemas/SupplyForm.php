@@ -21,37 +21,38 @@ class SupplyForm
             ->components([
                 Section::make('Supply Entry')
                     ->description('Log incoming stock and associated costs')
-                    ->columns(2)
+                    ->columnSpanFull()
+                    ->columns(4)
                     ->schema([
                         Select::make('product_id')
                             ->relationship('product', 'name_en')
                             ->searchable()
                             ->preload()
-                            ->required(),
+                            ->required()->columnSpan(2),
 
                         Select::make('cost_id')
                             ->label('Associated Cost')
                             ->relationship('cost', 'name_en')
                             ->searchable()
                             ->preload()
-                            ->required(),
+                            ->required()->columnSpan(2),
 
                         TextInput::make('recived_qty')
                             ->label('Received Quantity')
                             ->numeric()
-                            ->required(),
+                            ->required()->columnSpan(2),
 
                         TextInput::make('origin_type')
                             ->label('Source / Origin')
-                            ->placeholder('e.g., Local Factory, Import'),
+                            ->placeholder('e.g., Local Factory, Import')->columnSpan(2),
 
                         DatePicker::make('recived_date')
                             ->label('Arrival Date')
                             ->default(now())
-                            ->required(),
+                            ->required()->columnSpan(2),
 
                         DatePicker::make('expiry_date')
-                            ->label('Expiry Date'),
+                            ->label('Expiry Date')->columnSpan(2),
                     ])
             ]);
     }

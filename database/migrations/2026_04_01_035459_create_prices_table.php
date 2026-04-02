@@ -17,6 +17,7 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->decimal('wholesale_price', 10, 2);
             $table->decimal('retail_price', 10, 2);
+            $table->string('currency');
             $table->decimal('wholesale_min_price', 10, 2);
             $table->timestamps();
         });

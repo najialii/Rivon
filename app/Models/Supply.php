@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 class Supply extends Model
 {
@@ -14,8 +16,8 @@ class Supply extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function cost(): BelongsTo
+    public function cost(): HasMany
     {
-        return $this->belongsTo(Cost::class);
+        return $this->hasMany(Cost::class);
     }
 }

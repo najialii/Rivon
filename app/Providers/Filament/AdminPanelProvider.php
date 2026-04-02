@@ -21,6 +21,8 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Support\Enums\Width;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
+use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
+
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -33,14 +35,14 @@ class AdminPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()   
             ->brandLogo(asset('images/rivonlogo.jpeg'))
-            ->topNavigation()
+            // ->topNavigation()
                     ->sidebarCollapsibleOnDesktop()
                     ->brandName('Rivon')
 
 
                         ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
                     
-        ->maxContentWidth(Width::ScreenExtraLarge)
+        // ->maxContentWidth(Width::ScreenExtraLarge)
             ->brandLogoHeight('2.5rem')
             ->favicon(asset('favicon.ico'))
 
@@ -68,7 +70,7 @@ class AdminPanelProvider extends PanelProvider
                 500 => '#7c8484', 
                 600 => '#4a4f4f',
                 700 => '#252828',
-                800 => '#1a1d1d',
+                800 => '#1a1d1d',   
                 900 => '#0f1111',
             ],
             ])
@@ -96,6 +98,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FilamentShieldPlugin::make(),
+                            FilamentApexChartsPlugin::make(),
             ])
             ->authMiddleware([
                 Authenticate::class,

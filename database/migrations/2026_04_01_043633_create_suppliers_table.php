@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->text('address_ar')->nullable();
             $table->text('address_en')->nullable();
+            $table->string('country')->nullable();
             $table->foreignId('supply_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

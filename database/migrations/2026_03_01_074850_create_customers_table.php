@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name_ar');
             $table->string('name_en');
+            $table->enum('c_type', ['individual', 'wholesale'])->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->text('address_ar')->nullable();

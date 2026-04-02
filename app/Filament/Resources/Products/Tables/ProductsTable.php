@@ -2,14 +2,15 @@
 
 namespace App\Filament\Resources\Products\Tables;
 
-use Filament\Tables;
-use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
-use App\Models\Category;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 
 class ProductsTable
 {
@@ -37,14 +38,50 @@ class ProductsTable
                     ->sortable()
                     ->color('gray'),
 
-                TextColumn::make('category.id')
+                TextColumn::make('category.name_ar')
                     ->label('Category')
                     ->badge()
                     ->color('primary')
                     ->sortable(),
 
+                TextColumn::make('brand.name_en')
+                    ->label('Brand')
+                    ->searchable()
+                    ->sortable()
+                    ->color('primary'),
+
+                TextColumn::make('price.price')
+                    ->label('Retail Price')
+                    ->money(fn ($record) => $record->price->currency ?? 'USD') 
+                    ->sortable()
+                    ->color('success')
+                    ->weight('bold'),
+
+                TextColumn::make('price.wholesale_price')
+                    ->label('Wholesale')
+                    ->money(fn ($record) => $record->price->currency ?? 'USD')
+                    ->toggleable()
+                    ->color('warning'),
+
                 TextColumn::make('munit')
                     ->label('Unit')
+                    ->toggleable(),
+
+                TextColumn::make('status')
+                    ->label('Status')
+                    ->badge()
+                    ->formatStateUsing(fn (int $state): string => match ($state) {
+                        0 => 'Inactive',
+                        1 => 'Active',
+                        2 => 'Archived',
+                        default => 'Unknown',
+                    })
+                    ->color(fn (int $state): string => match ($state) {
+                        0 => 'danger',
+                        1 => 'success',
+                        2 => 'gray',
+                        default => 'gray',
+                    })
                     ->toggleable(),
 
                 TextColumn::make('created_at')
@@ -60,6 +97,9 @@ class ProductsTable
             ])
             ->actions([
                 EditAction::make(),
+                DeleteAction::make(),
+                ViewAction::make(),
+
             ])
             ->bulkActions([
                 BulkActionGroup::make([

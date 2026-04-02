@@ -16,50 +16,53 @@ class UserForm
             ->components([
                 Section::make('User Account')
                     ->description('Manage user credentials and access')
-                    ->columns(2)
+                    ->columnSpanFull()
+                    ->columns(4)
                     ->schema([
                         TextInput::make('name')
                             ->label('Full Name')
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->columnSpan(2), 
 
                         TextInput::make('email')
                             ->label('Email Address')
                             ->email()
                             ->required()
-                            ->unique(ignoreRecord: true),
+                            ->unique(ignoreRecord: true)
+                            ->columnSpan(2), 
 
                         Select::make('roles')
                             ->label('System Role')
-                            ->relationship('roles', 'name') // Automatically pulls roles from Spatie
-                            ->multiple() // Allow multiple roles if needed, or remove for single
+                            ->relationship('roles', 'name') 
+                            ->multiple() 
                             ->preload()
                             ->searchable()
                             ->native(false)
-                            ->required(),
-                        
+                            ->required()
+                            ->columnSpan(2),
 
                         TextInput::make('password')
                             ->password()
                             ->label(fn (string $context): string => $context === 'edit' ? 'New Password' : 'Password')
                             ->required(fn (string $context): bool => $context === 'create')
-                            ->dehydrated(fn ($state) => filled($state)),
+                            ->dehydrated(fn ($state) => filled($state))
+                            ->columnSpan(2),
 
                         DateTimePicker::make('email_verified_at')
                             ->label('Verification Date')
                             ->placeholder('Manually verify user')
-                            ->columnSpan(1),
+                            ->columnSpan(2),
 
-
-                            Select::make('is_active')
+                        Select::make('is_active')
                             ->label('Active Status')
                             ->options([
                                 true => 'Active',
                                 false => 'Inactive',
                             ])
                             ->default(true)
-                            ->required(),
-
+                            ->required()
+                            ->columnSpan(2),
                     ]),
             ]);
     }

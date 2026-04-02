@@ -19,34 +19,38 @@ class CategoryForm
             ->components([
                 Section::make('Category Details')
                     ->description('Organize products into logical groups')
-                    ->columns(2)
+                     ->columnSpanFull()
+
+                    ->columns(4)
                     ->schema([
                         TextInput::make('name_ar')
                             ->label('الاسم (عربي)')
                             ->required()
                             ->live(onBlur: true)
                             ->afterStateUpdated(fn (string $state, $set) => $set('slug', Str::slug($state)))
-                            ->extraInputAttributes(['dir' => 'rtl']),
+                            ->extraInputAttributes(['dir' => 'rtl'])
+                            ->columnSpan(2),
 
                         TextInput::make('name_en')
                             ->label('Name (EN)')
-                            ->required(),
+                            ->required()
+                            ->columnSpan(2),
 
                         TextInput::make('slug')
                             ->disabled()
                             ->dehydrated()
                             ->required()
                             ->unique(Category::class, 'slug', ignoreRecord: true)
-                            ->columnSpanFull(),
+                            ->columnSpanFull() ->columnSpan(2),
 
                         Textarea::make('description_ar')
                             ->label('الوصف (عربي)')
                             ->rows(3)
-                            ->extraInputAttributes(['dir' => 'rtl']),
+                            ->extraInputAttributes(['dir' => 'rtl']) ->columnSpan(2),
 
                         Textarea::make('description_en')
                             ->label('Description (EN)')
-                            ->rows(3),
+                            ->rows(3) ->columnSpan(2),
                     ])
             ]);
     }

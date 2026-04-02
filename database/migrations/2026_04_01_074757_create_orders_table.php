@@ -30,13 +30,5 @@ return new class extends Migration
         Schema::dropIfExists('orders');
     }
 
-    function product()
-    {
-        return $this->belongsTo(Product::class);
-    }
-
-    function customer()
-    {
-        return $this->belongsTo(Customer::class);
-    }
+ 
 };

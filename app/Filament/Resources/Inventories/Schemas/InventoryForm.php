@@ -18,35 +18,36 @@ class InventoryForm
             ->components([
                 Section::make('Stock Levels')
                     ->description('Manage current product availability and locations')
-                    ->columns(2)
+                    ->columnSpanFull()
+                    ->columns(4)
                     ->schema([
                         Select::make('product_id')
                             ->relationship('product', 'name_en')
                             ->searchable()
                             ->preload()
                             ->required()
-                            ->columnSpanFull(),
+                            ->columnSpanFull()->columnSpan(2),
 
                         TextInput::make('total_qty')
                             ->label('Total Stock')
                             ->numeric()
                             ->default(0)
-                            ->required(),
+                            ->required()->columnSpan(2),
 
                         TextInput::make('location')
                             ->label('Warehouse Location')
                             ->placeholder('e.g., A-1, Shelf 4')
-                            ->maxLength(255),
+                            ->maxLength(255)->columnSpan(2),
 
                         TextInput::make('wholesale_recived_qty')
                             ->label('Wholesale Received')
                             ->numeric()
-                            ->default(0),
+                            ->default(0)->columnSpan(2),
 
                         TextInput::make('retail_recived_qty')
                             ->label('Retail Received')
                             ->numeric()
-                            ->default(0),
+                            ->default(0)->columnSpan(2),
                     ])
             ]);
     }

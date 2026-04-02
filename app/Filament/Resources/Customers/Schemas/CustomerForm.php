@@ -18,36 +18,37 @@ class CustomerForm
             ->components([
                 Section::make('Customer Information')
                     ->description('Detailed profile for trade partners')
-                    ->columns(2) // This forces a 2-column grid for the whole section
+                    ->columnSpanFull()
+                    ->columns(4) 
                     ->schema([
                         TextInput::make('name_ar')
                             ->label('Name (AR)')
                             ->required()
-                            ->extraInputAttributes(['dir' => 'rtl']),
+                            ->extraInputAttributes(['dir' => 'rtl']) ->columnSpan(2),
 
                         TextInput::make('name_en')
                             ->label('Name (EN)')
-                            ->required(),
+                            ->required() ->columnSpan(2),
 
                         TextInput::make('phone')
                             ->label('Phone')
                             ->tel()
-                            ->required(),
+                            ->required() ->columnSpan(2),
 
                         TextInput::make('email')
                             ->label('Email')
-                            ->email(),
+                            ->email() ->columnSpan(2),
 
                         Textarea::make('address_ar')
                             ->label('Address (AR)')
                             ->rows(3)
                             ->columnSpanFull() // This makes it wide and centered
-                            ->extraInputAttributes(['dir' => 'rtl']),
+                            ->extraInputAttributes(['dir' => 'rtl']) ->columnSpan(2),
 
                         Textarea::make('address_en')
                             ->label('Address (EN)')
                             ->rows(3)
-                            ->columnSpanFull(),
+                            ->columnSpanFull() ->columnSpan(2),
                     ])
             ]);
     }

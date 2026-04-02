@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('description_ar')->nullable();
             $table->text('description_en')->nullable();
             $table->decimal('cost_price', 10, 2);
+            $table->string('currency');
             $table->string('cost_type');
             $table->timestamps();
         });
