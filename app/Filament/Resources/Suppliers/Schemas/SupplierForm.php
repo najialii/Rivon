@@ -49,6 +49,13 @@ class SupplierForm
                         Textarea::make('address_en')
                             ->label('Address (EN)')
                             ->rows(3),
+
+                        TextInput::make('country')
+                            ->label('Country')
+                            ->searchable()
+                            ->required(),
+
+
                     ]),
             ]);
     }

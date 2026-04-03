@@ -3,3 +3,336 @@
 @source '../../../../app/Filament/**/*';
 @source '../../../../resources/views/filament/**/*';
 @source '../../../../vendor/bezhansalleh/filament-language-switch/resources/views/**/*.blade.php';
+
+/* Modern SaaS Styling */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --fi-primary: 10 72 59;  /* Your original green sage */
+    --fi-success: 16 185 129;
+    --fi-warning: 245 158 11;
+    --fi-danger: 244 63 94;
+    --fi-gray-50: 255 255 255;
+    --fi-gray-100: 255 255 255;
+    --fi-gray-200: 255 255 255;
+    --fi-gray-300: 255 255 255;
+    --fi-gray-400: 163 169 169;
+    --fi-gray-500: 124 132 132;
+    --fi-gray-600: 74 79 79;
+    --fi-gray-700: 37 40 40;
+    --fi-gray-800: 26 29 29;
+    --fi-gray-900: 15 17 17;
+}
+
+/* Global Typography */
+body {
+    font-family: 'Inter', 'Tajawal', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+/* Modern Card Styling */
+.fi-ta-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid rgba(229, 231, 235, 0.8);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+.fi-ta-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Modern Button Styling */
+.fi-btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.fi-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.fi-btn-primary {
+    background: linear-gradient(135deg, rgb(10 72 59) 0%, rgb(9 65 53) 100%);
+    border: none;
+}
+
+/* Modern Input Styling */
+.fi-input {
+    border-radius: 8px;
+    border: 1px solid rgb(229 231 235);
+    transition: all 0.2s ease;
+}
+
+.fi-input:focus {
+    border-color: rgb(10 72 59);
+    box-shadow: 0 0 0 3px rgba(10, 72, 59, 0.1);
+}
+
+/* Modern Table Styling */
+.fi-table {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.fi-table th {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    font-weight: 600;
+    color: rgb(55 65 81);
+    border-bottom: 2px solid rgb(229 231 235);
+}
+
+.fi-table td {
+    border-bottom: 1px solid rgb(243 244 246);
+}
+
+.fi-table tr:hover {
+    background-color: rgb(249 250 251);
+}
+
+/* Modern Sidebar Styling */
+.fi-sidebar {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    border-right: 1px solid rgb(229 231 235);
+}
+
+.fi-sidebar-item {
+    border-radius: 8px;
+    margin: 4px 8px;
+    transition: all 0.2s ease;
+}
+
+.fi-sidebar-item:hover {
+    background-color: rgb(243 244 246);
+    transform: translateX(4px);
+}
+
+.fi-sidebar-item.active {
+    background: linear-gradient(135deg, rgb(10 72 59) 0%, rgb(9 65 53) 100%);
+    color: white;
+}
+
+/* Modern Badge Styling */
+.fi-badge {
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Modern Modal Styling */
+.fi-modal {
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Modern Form Section Styling */
+.fi-section {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid rgb(229 231 235);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+}
+
+.fi-section-header {
+    border-bottom: 2px solid rgb(229 231 235);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+}
+
+/* Modern Statistics Cards */
+.fi-stat-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid rgb(229 231 235);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.fi-stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, rgb(10 72 59) 0%, rgb(9 65 53) 100%);
+}
+
+/* Modern Loading Animation */
+.fi-loading {
+    border-radius: 50%;
+    border: 3px solid rgb(229 231 235);
+    border-top: 3px solid rgb(10 72 59);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Modern Tooltip Styling */
+.fi-tooltip {
+    background: rgb(17 24 39);
+    color: white;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    padding: 8px 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25);
+}
+
+/* Modern Alert Styling */
+.fi-alert {
+    border-radius: 8px;
+    border-left: 4px solid;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.fi-alert-success {
+    background: rgb(236 253 245);
+    border-color: rgb(16 185 129);
+    color: rgb(6 95 70);
+}
+
+.fi-alert-warning {
+    background: rgb(255 251 235);
+    border-color: rgb(245 158 11);
+    color: rgb(120 53 15);
+}
+
+.fi-alert-danger {
+    background: rgb(255 241 242);
+    border-color: rgb(244 63 94);
+    color: rgb(136 19 55);
+}
+
+.fi-alert-info {
+    background: rgb(239 246 255);
+    border-color: rgb(59 130 246);
+    color: rgb(29 78 216);
+}
+
+/* Modern Progress Bar */
+.fi-progress {
+    height: 8px;
+    border-radius: 4px;
+    background: rgb(229 231 235);
+    overflow: hidden;
+}
+
+.fi-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, rgb(10 72 59) 0%, rgb(9 65 53) 100%);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+/* Modern Dropdown */
+.fi-dropdown {
+    border-radius: 8px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgb(229 231 235);
+    background: white;
+}
+
+.fi-dropdown-item {
+    padding: 12px 16px;
+    transition: all 0.2s ease;
+}
+
+.fi-dropdown-item:hover {
+    background: rgb(249 250 251);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .fi-ta-card {
+        border-radius: 8px;
+        margin: 8px;
+    }
+    
+    .fi-section {
+        padding: 16px;
+        margin-bottom: 12px;
+    }
+    
+    .fi-stat-card {
+        padding: 16px;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --fi-primary: 10 72 59;  /* Keep your green sage in dark mode */
+        --fi-gray-50: 17 24 39;
+        --fi-gray-100: 31 41 55;
+        --fi-gray-200: 55 65 81;
+        --fi-gray-300: 75 85 99;
+        --fi-gray-400: 107 114 128;
+        --fi-gray-500: 156 163 175;
+        --fi-gray-600: 209 213 219;
+        --fi-gray-700: 229 231 235;
+        --fi-gray-800: 243 244 246;
+        --fi-gray-900: 249 250 251;
+    }
+}
+
+/* Force dark mode styles for Filament */
+.dark .fi-sidebar {
+    background: rgb(17 24 39) !important;
+    border-right: 1px solid rgb(55 65 81) !important;
+}
+
+.dark .fi-sidebar-item {
+    background: transparent !important;
+    color: rgb(209 213 219) !important;
+}
+
+.dark .fi-sidebar-item:hover {
+    background: rgb(55 65 81) !important;
+    color: rgb(255 255 255) !important;
+}
+
+.dark .fi-sidebar-item.active {
+    background: linear-gradient(135deg, rgb(10 72 59) 0%, rgb(9 65 53) 100%) !important;
+    color: white !important;
+}
+
+/* Ensure dark mode works properly */
+html.dark .fi-sidebar,
+[data-theme="dark"] .fi-sidebar {
+    background: rgb(17 24 39) !important;
+    border-right: 1px solid rgb(55 65 81) !important;
+}
+
+html.dark .fi-sidebar-item,
+[data-theme="dark"] .fi-sidebar-item {
+    background: transparent !important;
+    color: rgb(209 213 219) !important;
+}
+
+html.dark .fi-sidebar-item:hover,
+[data-theme="dark"] .fi-sidebar-item:hover {
+    background: rgb(55 65 81) !important;
+    color: rgb(255 255 255) !important;
+}
+
+html.dark .fi-sidebar-item.active,
+[data-theme="dark"] .fi-sidebar-item.active {
+    background: linear-gradient(135deg, rgb(10 72 59) 0%, rgb(9 65 53) 100%) !important;
+    color: white !important;
+}

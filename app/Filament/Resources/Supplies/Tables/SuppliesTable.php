@@ -40,7 +40,7 @@ class SuppliesTable
                     ->label('Date')
                     ->date()
                     ->sortable()
-                    ->color('primary'), // Your Aqua Deep
+                    ->color('primary'), 
 
                 TextColumn::make('expiry_date')
                     ->label('Expiry')

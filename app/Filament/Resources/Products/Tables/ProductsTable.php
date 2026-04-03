@@ -27,8 +27,8 @@ class ProductsTable
 
                 TextColumn::make('name_ar')
                     ->label('المنتج')
-                    ->searchable()
                     ->sortable()
+                    ->searchable()
                     ->weight('bold')
                     ->extraAttributes(['dir' => 'rtl']),
 
@@ -68,21 +68,21 @@ class ProductsTable
                     ->toggleable(),
 
                 TextColumn::make('status')
-                    ->label('Status')
-                    ->badge()
-                    ->formatStateUsing(fn (int $state): string => match ($state) {
-                        0 => 'Inactive',
-                        1 => 'Active',
-                        2 => 'Archived',
-                        default => 'Unknown',
-                    })
-                    ->color(fn (int $state): string => match ($state) {
-                        0 => 'danger',
-                        1 => 'success',
-                        2 => 'gray',
-                        default => 'gray',
-                    })
-                    ->toggleable(),
+    ->label('Status')
+    ->badge()
+    ->formatStateUsing(fn ($state): string => match ((int) $state) {
+        0 => 'Inactive',
+        1 => 'Active',
+        2 => 'Archived',
+        default => 'Unknown',
+    })
+    ->color(fn ($state): string => match ((int) $state) {
+        0 => 'danger',
+        1 => 'success',
+        2 => 'gray',
+        default => 'gray',
+    })
+    ->toggleable(),
 
                 TextColumn::make('created_at')
                     ->label('Added')
