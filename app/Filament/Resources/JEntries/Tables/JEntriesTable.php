@@ -2,12 +2,11 @@
 
 namespace App\Filament\Resources\JEntries\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
-
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
 
 class JEntriesTable
 {
@@ -15,31 +14,51 @@ class JEntriesTable
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('entry_number')
+                    ->label('Entry #')
+                    ->searchable()
+                    ->sortable()
+                    ->fontFamily('mono'),
 
-                TextColumn::make('created_at')->dateTime()->label('Date'),
-            TextColumn::make('account.name_en')->label('Account')->searchable(),
-            TextColumn::make('reference_type')
-                ->label('Source')
-                ->formatStateUsing(fn ($state) => class_basename($state)), // Shows "Supply" or "Order"
-            TextColumn::make('description_en')->label('Description')->limit(30),
-            TextColumn::make('debit')
-                ->money(fn ($record) => $record->currancy)
-                ->color('success'),
-            TextColumn::make('credit')
-                ->money(fn ($record) => $record->currancy)
-                ->color('danger'),
+                TextColumn::make('entry_date')
+                    ->label('Date')
+                    ->date()
+                    ->sortable(),
+
+                TextColumn::make('account.name_en')
+                    ->label('Account')
+                    ->searchable(),
+
+                TextColumn::make('debit')
+                    ->label('Debit')
+                    ->money(fn ($record) => $record->currency ?? 'USD')
+                    ->color('success')
+                    ->alignEnd(),
+
+                TextColumn::make('credit')
+                    ->label('Credit')
+                    ->money(fn ($record) => $record->currency ?? 'USD')
+                    ->color('danger')
+                    ->alignEnd(),
+
+                TextColumn::make('reference_type')
+                    ->label('Source')
+                    ->badge()
+                    ->color('gray'),
+                    
             ])
             ->filters([
-                //
+                // Add filters for Date and Account here
             ])
-            ->recordActions([
+            ->actions([
                 EditAction::make(),
             ])
-            ->toolbarActions([
+            ->bulkActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
             ]);
     }
+
+    
 }

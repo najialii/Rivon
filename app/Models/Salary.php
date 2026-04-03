@@ -2,31 +2,40 @@
 
 namespace App\Models;
 
+use App\Services\FinanceService;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Cost extends Model
+class Salary extends Model
 {
-    //
-    protected $fillable = ['name_ar', 'name_en', 'description_ar', 'description_en', 'cost_price','currency','supply_id', 'cost_type'];
-public function supply(): BelongsTo
-{
-    return $this->belongsTo(Supply::class);
-}
+    protected $fillable = [
+        'employee_id',
+        'amount',
+        'currency',
+        'code'
+    ];
 
 
-protected static function booted()
+    
+    public function employee(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'employee_id');
+    }
+
+  
+    protected static function booted()
 {
-    static::created(function ($Cost) {
+    static::created(function ($salary) {
         $salaryExpenseAccount = \App\Models\Account::where('code', 'salary_expense')->first();
         $cashAccount = \App\Models\Account::where('code', 'cash_on_hand')->first();
 
         if ($salaryExpenseAccount && $cashAccount) {
             FinanceService::processTransaction(
-                reference: $Cost,
+                reference: $salary,
                 debitAccountId: $salaryExpenseAccount->id,  
                 creditAccountId: $cashAccount->id,
                 amount: $salary->amount,
-                descEn: "cost  #" . $salary->employee_id,
+                descEn: "Salary payment for Employee #" . $salary->employee_id,
                 descAr: "صرف راتب للموظف رقم: " . $salary->employee_id,
                 currency: $salary->currency
             );
@@ -34,7 +43,6 @@ protected static function booted()
             \Log::error("Finance Error: Required accounts (salary_expense/cash_on_hand) missing from COA.");
         }
     });
+}
 
-    }
-
-    }
+}

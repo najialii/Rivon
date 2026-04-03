@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\J_entries;
+use App\Models\Jentry;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -24,25 +24,25 @@ class FinanceService
         DB::transaction(function () use ($reference, $debitAccountId, $creditAccountId, $amount, $descEn, $descAr, $currency) {
             
             // 1. The Debit Entry (Money going INTO an account/asset)
-            J_entries::create([
+            Jentry::create([
                 'account_id'     => $debitAccountId,
                 'reference_type' => get_class($reference),
                 'reference_id'   => $reference->id,
                 'debit'          => $amount,
                 'credit'         => 0,
-                'currancy'       => $currency,
+                'currency'       => $currency,
                 'description_en' => $descEn,
                 'description_ar' => $descAr,
             ]);
 
             // 2. The Credit Entry (Money coming OUT of an account/liability)
-            J_entries::create([
+            Jentry::create([
                 'account_id'     => $creditAccountId,
                 'reference_type' => get_class($reference),
                 'reference_id'   => $reference->id,
                 'debit'          => 0,
                 'credit'         => $amount,
-                'currancy'       => $currency,
+                'currency'       => $currency,
                 'description_en' => $descEn,
                 'description_ar' => $descAr,
             ]);

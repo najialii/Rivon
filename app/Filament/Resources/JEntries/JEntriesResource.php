@@ -7,18 +7,21 @@ use App\Filament\Resources\JEntries\Pages\EditJEntries;
 use App\Filament\Resources\JEntries\Pages\ListJEntries;
 use App\Filament\Resources\JEntries\Schemas\JEntriesForm;
 use App\Filament\Resources\JEntries\Tables\JEntriesTable;
-use App\Models\JEntries;
+use App\Models\Jentry;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-
+use UnitEnum;
 class JEntriesResource extends Resource
 {
-    protected static ?string $model = JEntries::class;
+    protected static ?string $model = Jentry::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+            protected static string | UnitEnum | null $navigationGroup = 'Financials';
+
+            protected static ?string $navigationLabel = 'Journal Entries';
 
     public static function form(Schema $schema): Schema
     {

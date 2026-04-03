@@ -26,7 +26,7 @@ class AccountsTable
                 }),
             TextColumn::make('balance') // Uses the getBalanceAttribute we made
                 ->label('Live Balance')
-                ->money(fn ($record) => $record->currancy)
+                ->money(fn ($record) => $record->currency)
                 ->weight('bold'),
         ])
             ->filters([

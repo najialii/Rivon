@@ -19,10 +19,11 @@ return new class extends Migration
             $table->foreignId('brand_id')->constrained()->onDelete('cascade');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->text('description_ar')->nullable();
+            $table->foreignId('product_id')->nullable()->constrained('products')->onDelete('set null');
             $table->text('description_en')->nullable();
             $table->string('img_path')->nullable();
             $table->string('munit')->nullable();
-                $table->enum('status', ['active', 'inactive', 'archived'])->default('active');
+            $table->enum('status', ['active', 'inactive', 'archived'])->default('active');
             $table->timestamps();
         });
     }
