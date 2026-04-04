@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Customers\Tables;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\BulkActionGroup;
@@ -33,8 +34,18 @@ class CustomersTable
                     ->searchable()
                     ->sortable()
                     ->color('gray'),
-
-                        TextColumn::make('address_ar')
+IconColumn::make('c_type')
+    ->label('Type')
+    ->options([
+        'heroicon-o-user' => 'individual',
+        'heroicon-o-building-office' => 'wholesale',
+    ])
+    ->colors([
+        'info' => 'individual',
+        'warning' => 'wholesale',
+    ])
+    ->alignCenter(),
+                TextColumn::make('address_ar')
                     ->label('العنوان (عربي)')
                     ->searchable()
                     ->sortable()
@@ -51,6 +62,8 @@ class CustomersTable
                     ->label('Email')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
+
 
                 TextColumn::make('created_at')
                     ->dateTime()

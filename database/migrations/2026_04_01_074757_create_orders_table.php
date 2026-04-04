@@ -17,7 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('quantity');
             $table->decimal('total_price', 10, 2);
             $table->date('order_date');
-            $table->foreignId('customer_id')->constrained()->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
+            $table->string('status');
             $table->timestamps();
         });
     }

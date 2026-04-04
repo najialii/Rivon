@@ -2,14 +2,17 @@
 
 namespace App\Filament\Resources\Orders\Tables;
 
+use App\Models\Order; // Added this import
+use App\Services\InvoiceService;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Actions\EditAction;
+use Filament\Tables\Actions\Action;
 use Filament\Actions\BulkActionGroup;
-use App\Models\Category;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Notifications\Notification;
 
 class OrdersTable
 {
@@ -17,18 +20,17 @@ class OrdersTable
     {
         return $table
             ->columns([
-                //
                 TextColumn::make('id')
                     ->label('Order ID')
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('customer_name')
+                TextColumn::make('customer.name')
                     ->label('Customer Name')    
                     ->searchable()
                     ->sortable(),
 
-                       TextColumn::make('product.name_en')
+                TextColumn::make('product.name_en')
                     ->label('Product')
                     ->searchable()
                     ->sortable()
@@ -42,18 +44,44 @@ class OrdersTable
 
                 TextColumn::make('total_price')
                     ->label('Total Price')
-                    ->money('usd', true)
+                    ->money('usd')
                     ->sortable()
                     ->alignCenter(),
+
+                IconColumn::make('hasInvoice')
+                    ->label('Invoiced')
+                    ->boolean()
+                    // Fixed: Using the imported 'Order' class instead of full path string
+                    ->getStateUsing(fn (Order $record): bool => $record->hasInvoice())
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->falseIcon('heroicon-o-x-circle')
+                    ->trueColor('success')
+                    ->falseColor('danger'),
 
             ])
             ->filters([
                 //
             ])
-            ->recordActions([
+            ->actions([
                 EditAction::make(),
+                // Action::make('convert_to_invoice')
+                //     ->label('Convert to Invoice')
+                //     ->icon('heroicon-o-document-text')
+                //     ->color('primary')
+                //     // Fixed: Type-hint correctly references root App\Models\Order
+                //     ->visible(fn (Order $record): bool => $record->canBeConvertedToInvoice())
+                //     ->action(function (Order $record) {
+                //         $invoice = InvoiceService::convertOrderToInvoice($record);
+                        
+                //         Notification::make()
+                //             ->title('Invoice Created Successfully')
+                //             ->success()
+                //             ->send();
+
+                //         return redirect()->route('filament.admin.resources.invoices.edit', ['record' => $invoice->id]);
+                //     }),
             ])
-            ->toolbarActions([
+            ->bulkActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),

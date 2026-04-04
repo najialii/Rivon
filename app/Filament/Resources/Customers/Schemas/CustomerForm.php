@@ -7,6 +7,7 @@ use Filament\Schemas\Schema;
 use Filament\Forms\Form;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Components\Grid;
 
@@ -38,6 +39,14 @@ class CustomerForm
                         TextInput::make('email')
                             ->label('Email')
                             ->email() ->columnSpan(2),
+
+                            Select::make('c_type')
+                            ->label('customer type')
+                            ->options([
+                               'individual' => 'Individual',
+                                'wholesale' => 'Wholesale',
+                            ])->default('individual')->columnSpan(2)->required(), 
+
 
                         Textarea::make('address_ar')
                             ->label('Address (AR)')

@@ -14,6 +14,17 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
+        $this->call([
+            // Core data seeders
+            BrandSeeder::class,
+            CategorySeeder::class,
+            ProductSeeder::class,
+            AccountSeeder::class,
+            
+            // Sample data seeders
+            SampleDataSeeder::class,
+        ]);
+
         // 1. Create the Role (Specify guard_name to be safe)
         $adminRole = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
 

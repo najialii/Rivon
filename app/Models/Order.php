@@ -3,20 +3,40 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Order extends Model
 {
+    protected $fillable = ['product_id', 'quantity', 'total_price', 'order_date', 'customer_id', 'status'];
 
-protected $fillable = ['product_id', 'quantity', 'total_price', 'order_date', 'customer_id'];
+    protected $casts = [
+        'order_date' => 'date',
+        'quantity' => 'decimal:2',
+        'total_price' => 'decimal:2',
+    ];
 
-   function product()
+    public function product()
     {
         return $this->belongsTo(Product::class);
     }
 
-    function customer()
+    public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(User::class, 'customer_id');
     }
 
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    public function hasInvoice()
+    {
+        return $this->invoices()->exists();
+    }
+
+    public function canBeConvertedToInvoice()
+    {
+        return $this->status !== 'cancelled' && !$this->hasInvoice();
+    }
 }
