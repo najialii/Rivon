@@ -44,11 +44,23 @@
         ])
         ->default('USD')
         ->required() 
-        // ->dehydrated()
-        
         ->columnSpan(2)
         ->native(false),
 
+
+        //code 
+        Select::make('code')
+        ->label('Salary Code')
+        ->options([
+            'SAL' => 'SAL - Salary | راتب',
+            'BON' => 'BON - Bonus | مكافأة',
+            'COM' => 'COM - Commission | عمولة',
+            'OTH' => 'OTH - Other | أخرى',
+        ])
+        ->default('SAL')
+        ->required()
+        ->columnSpan(2)
+        ->native(false),
 
 
                 ]);

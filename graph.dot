@@ -1,0 +1,456 @@
+digraph G {
+	graph [bb="0,0,1111.3,1128",
+		bgcolor="#F7F7F7",
+		concentrate=1,
+		esep=1,
+		fontname="Helvetica Neue",
+		fontsize=12,
+		labelloc=t,
+		nodesep=1,
+		overlap="",
+		pad=0.5,
+		rankdir=LR,
+		ranksep=2,
+		splines=polyline,
+		style=filled
+	];
+	node [label="\N"];
+	appmodelsaccount	[fontname="Helvetica Neue",
+		height=1.3889,
+		label=<<table width="100%" height="100%" border="0" margin="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Account</font></td></tr>
+</table>>,
+		margin=0,
+		pos="68.301,136",
+		shape=rectangle,
+		width=1.3889];
+	appmodelsaccount:parent_id -> appmodelsaccount:id	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="68.301,265.5",
+		penwidth=1.8,
+		pos="s,47.554,186.13 e,89.048,186.13 46.015,196.22 42.216,228.54 49.645,258 68.301,258 87.922,258 95.124,225.42 89.907,191.19",
+		xlabel="BelongsTo
+parent",
+		xlp="34.5,240.84"];
+	appmodelsjentry	[fontname="Helvetica Neue",
+		height=1.3889,
+		label=<<table width="100%" height="100%" border="0" margin="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Jentry</font></td></tr>
+</table>>,
+		margin=0,
+		pos="316.3,136",
+		shape=rectangle,
+		width=1.3889];
+	appmodelsaccount:id -> appmodelsjentry:account_id	[arrowhead=crow,
+		arrowtail=none,
+		color="#FCBF49",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="192.3,143.5",
+		penwidth=1.8,
+		pos="e,266.2,136 118.49,136 158.13,136 213.99,136 256.08,136",
+		xlabel="HasMany
+entries",
+		xlp="156.29,121"];
+	appmodelsjentry:account_id -> appmodelsaccount:id	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="192.3,110.5",
+		penwidth=1.8,
+		pos="s,266.09,122.58 e,118.52,122.58 256.17,119.87 225.47,111.5 194.3,103 194.3,103 194.3,103 190.3,103 190.3,103 190.3,103 155.81,112.41 \
+123.65,121.18",
+		xlabel="BelongsTo
+account",
+		xlp="155.34,88.125"];
+	appmodelsjentry:reference_id -> appmodelsjentry	[color="#003049",
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="316.3,265.5",
+		penwidth=1.8,
+		pos="e,337.05,186.13 295.55,186.13 288.8,222.13 295.71,258 316.3,258 334.96,258 342.39,228.54 338.59,196.22",
+		xlabel="MorphTo
+reference",
+		xlp="283.03,238.61"];
+	appmodelscategory	[fontname="Helvetica Neue",
+		height=1.3889,
+		label=<<table width="100%" height="100%" border="0" margin="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Category</font></td></tr>
+</table>>,
+		margin=0,
+		pos="316.3,734",
+		shape=rectangle,
+		width=1.3889];
+	appmodelsproduct	[fontname="Helvetica Neue",
+		height=1.3889,
+		label=<<table width="100%" height="100%" border="0" margin="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Product</font></td></tr>
+</table>>,
+		margin=0,
+		pos="564.3,648",
+		shape=rectangle,
+		width=1.3889];
+	appmodelscategory:id -> appmodelsproduct:category_id	[arrowhead=crow,
+		arrowtail=none,
+		color="#FCBF49",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="440.3,650.5",
+		penwidth=1.8,
+		pos="e,514.09,645.97 366.52,696.99 400.02,671.79 438.3,643 438.3,643 438.3,643 442.3,643 442.3,643 442.3,643 473.2,644.28 503.78,645.54",
+		xlabel="HasMany
+products",
+		xlp="397.59,635.3"];
+	appmodelsproduct:category_id -> appmodelscategory:id	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="440.3,698.5",
+		penwidth=1.8,
+		pos="s,514.2,665.17 e,366.49,716.8 504.72,668.48 464.25,682.63 410.8,701.31 371.34,715.11",
+		xlabel="BelongsTo
+category",
+		xlp="403.53,676.79"];
+	appmodelsprice	[fontname="Helvetica Neue",
+		height=1.3889,
+		label=<<table width="100%" height="100%" border="0" margin="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Price</font></td></tr>
+</table>>,
+		margin=0,
+		pos="812.3,728",
+		shape=rectangle,
+		width=1.3889];
+	appmodelsproduct:id -> appmodelsprice:product_id	[arrowhead=tee,
+		arrowtail=none,
+		color="#D62828",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="688.3,695.5",
+		penwidth=1.8,
+		pos="e,762.2,712.03 614.49,664 655.8,677.43 714.75,696.6 757.35,710.45",
+		xlabel="HasOne
+price",
+		xlp="658.92,672.23"];
+	appmodelsbrand	[fontname="Helvetica Neue",
+		height=1.3889,
+		label=<<table width="100%" height="100%" border="0" margin="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Brand</font></td></tr>
+</table>>,
+		margin=0,
+		pos="812.3,556",
+		shape=rectangle,
+		width=1.3889];
+	appmodelsproduct:brand_id -> appmodelsbrand:id	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="688.3,609.5",
+		penwidth=1.8,
+		pos="s,614.49,629.6 e,762.2,574.36 624.08,626.02 664.6,610.86 718.05,590.88 757.46,576.14",
+		xlabel="BelongsTo
+brand",
+		xlp="656.27,586.08"];
+	appmodelsuom	[fontname="Helvetica Neue",
+		height=1.3889,
+		label=<<table width="100%" height="100%" border="0" margin="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Uom</font></td></tr>
+</table>>,
+		margin=0,
+		pos="812.3,900",
+		shape=rectangle,
+		width=1.3889];
+	appmodelsproduct:uom_id -> appmodelsuom:id	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="688.3,781.5",
+		penwidth=1.8,
+		pos="s,614.2,698.09 e,762.08,849.58 621.4,705.46 662.48,747.54 717.86,804.29 758.22,845.62",
+		xlabel="BelongsTo
+uom",
+		xlp="724.31,760.54"];
+	appmodelsinventory	[fontname="Helvetica Neue",
+		height=1.3889,
+		label=<<table width="100%" height="100%" border="0" margin="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Inventory</font></td></tr>
+</table>>,
+		margin=0,
+		pos="316.3,556",
+		shape=rectangle,
+		width=1.3889];
+	appmodelsinventory:product_id -> appmodelsproduct:id	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="440.3,609.5",
+		penwidth=1.8,
+		pos="s,366.49,574.4 e,514.2,629.64 376.08,577.98 416.6,593.14 470.05,613.12 509.46,627.86",
+		xlabel="BelongsTo
+product",
+		xlp="477.27,587.92"];
+	appmodelsinvoice	[fontname="Helvetica Neue",
+		height=1.3889,
+		label=<<table width="100%" height="100%" border="0" margin="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Invoice</font></td></tr>
+</table>>,
+		margin=0,
+		pos="812.3,225",
+		shape=rectangle,
+		width=1.3889];
+	appmodelsorder	[fontname="Helvetica Neue",
+		height=1.3889,
+		label=<<table width="100%" height="100%" border="0" margin="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Order</font></td></tr>
+</table>>,
+		margin=0,
+		pos="564.3,261",
+		shape=rectangle,
+		width=1.3889];
+	appmodelsinvoice:order_id -> appmodelsorder:id	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="688.3,252.5",
+		penwidth=1.8,
+		pos="s,762.09,232.73 e,614.35,254.33 752.17,234.28 721.47,239.11 690.3,244 690.3,244 690.3,244 653.11,249.06 619.3,253.66",
+		xlabel="BelongsTo
+order",
+		xlp="651.33,259.61"];
+	appmodelscustomer	[fontname="Helvetica Neue",
+		height=1.3889,
+		label=<<table width="100%" height="100%" border="0" margin="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Customer</font></td></tr>
+</table>>,
+		margin=0,
+		pos="1060.8,385",
+		shape=rectangle,
+		width=1.3889];
+	appmodelsinvoice:customer_id -> appmodelscustomer:id	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="936.3,312.5",
+		penwidth=1.8,
+		pos="s,862.59,256.99 e,1010.6,353.06 871.13,262.54 912.01,289.07 966.42,324.38 1006.3,350.27",
+		xlabel="BelongsTo
+customer",
+		xlp="973.21,291.4"];
+	appmodelsinvoiceitem	[fontname="Helvetica Neue",
+		height=1.3889,
+		label=<<table width="100%" height="100%" border="0" margin="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">InvoiceItem</font></td></tr>
+</table>>,
+		margin=0,
+		pos="1060.8,196",
+		shape=rectangle,
+		width=1.4028];
+	appmodelsinvoice:id -> appmodelsinvoiceitem:invoice_id	[arrowhead=crow,
+		arrowtail=none,
+		color="#FCBF49",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="936.3,218.5",
+		penwidth=1.8,
+		pos="e,1010.2,201.84 862.59,219.2 902.18,214.54 957.92,207.99 1000,203.03",
+		xlabel="HasMany
+items",
+		xlp="900.32,196.12"];
+	appmodelsorder:id -> appmodelsinvoice:order_id	[arrowhead=crow,
+		arrowtail=none,
+		color="#FCBF49",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="688.3,230.5",
+		penwidth=1.8,
+		pos="e,762.09,224.19 614.52,245.54 648.02,235.02 686.3,223 686.3,223 686.3,223 690.3,223 690.3,223 690.3,223 721.2,223.51 751.78,224.02",
+		xlabel="HasMany
+invoices",
+		xlp="650.65,209.46"];
+	appmodelsorder:customer_id -> appmodelscustomer:id	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="812.3,343.5",
+		penwidth=1.8,
+		pos="s,614.5,273.49 e,1010.7,372.78 624.34,275.98 682.37,290.71 762.3,311 762.3,311 762.3,311 919.84,350.19 1005.6,371.53",
+		xlabel="BelongsTo
+customer",
+		xlp="780.4,309.08"];
+	appmodelssupplier	[fontname="Helvetica Neue",
+		height=1.3889,
+		label=<<table width="100%" height="100%" border="0" margin="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">supplier</font></td></tr>
+</table>>,
+		margin=0,
+		pos="812.3,50",
+		shape=rectangle,
+		width=1.3889];
+	appmodelsorder:supplier_id -> appmodelssupplier:id	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="688.3,163.5",
+		penwidth=1.8,
+		pos="s,614.49,218.81 e,762.2,92.119 622.22,212.18 663.26,176.98 718.27,129.8 758.36,95.406",
+		xlabel="BelongsTo
+supplier",
+		xlp="724.79,138.79"];
+	appmodelsinvoiceitem:invoice_id -> appmodelsinvoice:id	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="936.3,185.5",
+		penwidth=1.8,
+		pos="s,1010,188.63 e,862.52,205.88 1000.1,187.16 969.39,182.61 938.3,178 938.3,178 938.3,178 934.3,178 934.3,178 934.3,178 899.52,191.51 \
+867.25,204.04",
+		xlabel="BelongsTo
+invoice",
+		xlp="897.26,163.99"];
+	appmodelssupplier:id -> appmodelsorder:supplier_id	[arrowhead=crow,
+		arrowtail=none,
+		color="#FCBF49",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="688.3,130.5",
+		penwidth=1.8,
+		pos="e,609.33,210.79 762.26,78.642 727.24,99.093 686.3,123 686.3,123 686.3,123 649.37,165.13 616.31,202.83",
+		xlabel="HasMany
+order",
+		xlp="649.3,114.85"];
+	appmodelsorderitem	[fontname="Helvetica Neue",
+		height=1.3889,
+		label=<<table width="100%" height="100%" border="0" margin="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Order_item</font></td></tr>
+</table>>,
+		margin=0,
+		pos="316.3,341",
+		shape=rectangle,
+		width=1.3889];
+	appmodelsorderitem:product_id -> appmodelsproduct:id	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="440.3,502.5",
+		penwidth=1.8,
+		pos="s,357.37,391.01 e,523.04,597.76 363.7,398.9 408.49,454.81 475.82,538.83 519.66,593.54",
+		xlabel="BelongsTo
+product",
+		xlp="476.18,481.22"];
+	appmodelsorderitem:order_id -> appmodelsorder:id	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="440.3,296.5",
+		penwidth=1.8,
+		pos="s,366.52,319.85 e,514.26,271.99 376.03,315.76 406.86,302.51 438.3,289 438.3,289 438.3,289 475.49,280.67 509.3,273.1",
+		xlabel="BelongsTo
+order",
+		xlp="406.23,273.46"];
+	appmodelsprice:product_id -> appmodelsproduct:id	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="688.3,650.5",
+		penwidth=1.8,
+		pos="s,762.09,693.43 e,614.52,645.97 753.77,687.58 722.56,665.66 690.3,643 690.3,643 690.3,643 686.3,643 686.3,643 686.3,643 651.81,644.43 \
+619.65,645.75",
+		xlabel="BelongsTo
+product",
+		xlp="727.61,629.97"];
+	appmodelssalary	[fontname="Helvetica Neue",
+		height=1.3889,
+		label=<<table width="100%" height="100%" border="0" margin="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Salary</font></td></tr>
+</table>>,
+		margin=0,
+		pos="68.301,906",
+		shape=rectangle,
+		width=1.3889];
+	appmodelsuser	[fontname="Helvetica Neue",
+		height=1.3889,
+		label=<<table width="100%" height="100%" border="0" margin="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">User</font></td></tr>
+</table>>,
+		margin=0,
+		pos="316.3,906",
+		shape=rectangle,
+		width=1.3889];
+	appmodelssalary:employee_id -> appmodelsuser:id	[arrowhead=tee,
+		arrowtail=crow,
+		color="#F77F00",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="192.3,913.5",
+		penwidth=1.8,
+		pos="s,118.49,906 e,266.2,906 128.61,906 168.91,906 221.81,906 261,906",
+		xlabel="BelongsTo
+employee",
+		xlp="160.31,891"];
+	appmodelswarehouse	[fontname="Helvetica Neue",
+		height=1.3889,
+		label=<<table width="100%" height="100%" border="0" margin="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Warehouse</font></td></tr>
+</table>>,
+		margin=0,
+		pos="68.301,556",
+		shape=rectangle,
+		width=1.3889];
+	appmodelswarehouse:id -> appmodelsinventory:warehouse_id	[arrowhead=crow,
+		arrowtail=none,
+		color="#FCBF49",
+		dir=both,
+		fontname="Helvetica Neue",
+		label=" ",
+		lp="192.3,563.5",
+		penwidth=1.8,
+		pos="e,266.2,556 118.49,556 158.13,556 213.99,556 256.08,556",
+		xlabel="HasMany
+inventory",
+		xlp="155.29,541"];
+	appmodelscost	[fontname="Helvetica Neue",
+		height=1.3889,
+		label=<<table width="100%" height="100%" border="0" margin="0" cellborder="1" cellspacing="0" cellpadding="10">
+<tr width="100%"><td width="100%" bgcolor="#d3d3d3"><font color="#333333">Cost</font></td></tr>
+</table>>,
+		margin=0,
+		pos="68.301,1078",
+		shape=rectangle,
+		width=1.3889];
+}

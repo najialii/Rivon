@@ -6,13 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cost extends Model
 {
-    //
     protected $fillable = ['name_ar', 'name_en', 'description_ar', 'description_en', 'cost_price','currency','supply_id', 'cost_type'];
-public function supply(): BelongsTo
-{
-    return $this->belongsTo(Supply::class);
-}
 
+public function orderItem(): BelongsTo
+{
+    return $this->belongsTo(Order_item::class, 'order_item_id');
+}
 
 protected static function booted()
 {

@@ -6,17 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Database\Eloquent\Relations\HasMany; 
 
 class Product extends Model
 {
     use HasFactory ,  LogsActivity;
 
     protected $fillable = ['sku', 'name_ar', 'brand_id', 'name_en',
-     'description_ar', 'description_en', 'img_path', 'category_id', 'munit', "status"];
+     'description_ar', 'description_en','type', 'orginal_price','currancy', 'wholesale_price', 'retail_price', 'img_path', 'category_id', 'measurement_unit', ' unit_quantity', 'unit_weight', "status"];
 
     public function supplies()
     {
-        return $this->hasMany(Supply::class);
+        return $this->HasMany(Supply::class);
     }
 
     function category()
@@ -30,12 +31,21 @@ class Product extends Model
     return $this->belongsTo(Brand::class);
 }
 
-public function price()
+
+
+public function stockMovements()
 {
-    return $this->hasOne(Price::class);
-
-
+    return $this->hasMany(Stockmovement::class);
 }
+
+
+
+
+    public function costTemplates(): HasMany
+{
+    return $this->hasMany(Cost::class)->whereNull('order_item_id');
+}
+
 
 public function getActivitylogOptions(): LogOptions
     {
@@ -47,3 +57,4 @@ public function getActivitylogOptions(): LogOptions
 
 
 }
+

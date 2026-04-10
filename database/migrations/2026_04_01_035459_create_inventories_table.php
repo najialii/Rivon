@@ -17,7 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger('total_qty');
             $table->unsignedBigInteger('wholesale_recived_qty');
             $table->unsignedBigInteger('retail_recived_qty');
-            $table->string('location')->nullable();
             $table->timestamps();
         });
     }

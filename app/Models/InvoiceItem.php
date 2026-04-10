@@ -44,6 +44,11 @@ class InvoiceItem extends Model
         return number_format($this->subtotal, 2);
     }
 
+    public function taxRate()
+{
+    return $this->belongsTo(TaxRate::class);
+}
+
     public function getFormattedUnitPriceAttribute()
     {
         return number_format($this->unit_price, 2);

@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name_ar');
             $table->string('name_en');
+            $table->foreignId('product_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('order_item_id')->nullable()->constrained('order_items')->onDelete('cascade');
             $table->text('description_ar')->nullable();
             $table->text('description_en')->nullable();
             $table->decimal('cost_price', 10, 2);

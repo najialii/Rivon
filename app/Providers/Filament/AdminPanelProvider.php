@@ -36,12 +36,12 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()
-            ->brandLogo(asset('images/rivonlogo.jpeg'))
-            ->brandLogoHeight('2.5rem')
+            // ->brandLogo(asset('images/rivonlogo.jpeg'))
+            ->brandLogoHeight('2rem')
             ->sidebarCollapsibleOnDesktop()
-            ->sidebarWidth('20rem')
+            ->sidebarWidth('18rem')
             ->sidebarFullyCollapsibleOnDesktop()
-            ->brandName('Rivon')
+            ->brandName('logo ')
             ->topNavigation(false)
             ->maxContentWidth(Width::Full)
             ->renderHook(
@@ -148,7 +148,7 @@ class AdminPanelProvider extends PanelProvider
             ->pages([
                 Dashboard::class,
             ])
-            ->font('Tajawal', 'Tajawal, sans-serif')
+            ->font('Inter', 'Inter, ui-sans-serif, system-ui, sans-serif')
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 // AccountWidget::class,

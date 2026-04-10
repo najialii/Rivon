@@ -89,11 +89,13 @@ class InvoiceForm
                         Select::make('currency')
                             ->label('Currency')
                             ->options([
-                                'USD' => 'USD',
-                                'EUR' => 'EUR',
-                                'GBP' => 'GBP',
-                            ])
-                            ->default('USD')
+                                'EGP' => 'EGP - Egyptian Pound | ج.م - جنيه مصري',
+                                'SDG' => 'SDG - Sudanese Pound | ج.س - جنيه سوداني',
+                                'AED' => 'AED - Emirati Dirham | د.إ - درهم إماراتي',
+                                'SAR' => 'SAR - Saudi Riyal | ر.س - ريال سعودي',
+                                'USD' => 'USD - US Dollar | $ - دولار أمريكي',
+                                'DZD' => 'DZD - Algerian Dinar | د.ج - دينار جزائري',
+                            ])  ->default('USD')
                             ->required(),
 
                         Select::make('status')

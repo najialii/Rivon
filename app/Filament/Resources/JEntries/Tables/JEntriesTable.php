@@ -51,7 +51,7 @@ class JEntriesTable
                 // Add filters for Date and Account here
             ])
             ->actions([
-                EditAction::make(),
+                // EditAction::make(),
             ])
             ->bulkActions([
                 BulkActionGroup::make([

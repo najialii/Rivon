@@ -52,7 +52,6 @@ class SupplierForm
 
                         TextInput::make('country')
                             ->label('Country')
-                            ->searchable()
                             ->required(),
 
 
