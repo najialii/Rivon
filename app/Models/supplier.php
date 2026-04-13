@@ -12,10 +12,7 @@ class supplier extends Model
         'address_en', 'address_ar',
     ];
 
-    // public function supplies()
-    // {
-    //     return $this->hasMany(Supply::class);
-    // }
+    
 
     public function order()
     {

@@ -61,8 +61,7 @@ class InvoiceForm
                                 if ($state) {
                                     $order = Order::find($state);
                                     if ($order) {
-                                        // Pre-fill with order data
-                                        $set('subtotal', $order->total_price);
+                                            $set('subtotal', $order->total_price);
                                         $set('tax_total', $order->total_price * 0.10); // 10% tax
                                         $set('total_amount', $order->total_price * 1.10);
                                         

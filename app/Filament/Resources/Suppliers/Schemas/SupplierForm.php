@@ -52,7 +52,7 @@ class SupplierForm
 
                         TextInput::make('country')
                             ->label('Country')
-                            ->required(),
+                                ->required(),
 
 
                     ]),
