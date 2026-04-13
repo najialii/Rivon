@@ -7,8 +7,9 @@ use App\Filament\Resources\JEntries\Pages\EditJEntries;
 use App\Filament\Resources\JEntries\Pages\ListJEntries;
 use App\Filament\Resources\JEntries\Schemas\JEntriesForm;
 use App\Filament\Resources\JEntries\Tables\JEntriesTable;
-use App\Models\Jentry;
+use App\Models\JournalTransaction;
 use BackedEnum;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -16,7 +17,7 @@ use Filament\Tables\Table;
 use UnitEnum;
 class JEntriesResource extends Resource
 {
-    protected static ?string $model = Jentry::class;
+    protected static ?string $model = JournalTransaction::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
             protected static string | UnitEnum | null $navigationGroup = 'Financials';
@@ -38,6 +39,14 @@ class JEntriesResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withSum('lines', 'debit')
+            ->withSum('lines', 'credit')
+            ->withCount('lines');
     }
 
     public static function getPages(): array

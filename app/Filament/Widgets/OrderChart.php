@@ -8,6 +8,7 @@ class OrderChart extends ApexChartWidget
 {
     protected static ?string $chartId = 'orderChart';
     protected static ?string $heading = 'Order Fulfillment';
+protected static ?int $sort = 2;
 
     protected function getOptions(): array
     {

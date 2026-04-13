@@ -8,7 +8,18 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Order_item extends Model
 {
-    protected $fillable = [ 'order_id', 'orginal_price','currancy', 'wholesale_price', 'retail_price', 'product_id', 'quantity', 'price','expiry_date', 'origin_type' , 'cost_breakdown'];
+    protected $fillable = [
+        'order_id',
+        'product_id',
+        'quantity',
+        'original_price',
+        'wholesale_price',
+        'retail_price',
+        'wholesale_min_price',
+        'price',
+        'currency',
+        'cost_breakdown',
+    ];
 
     protected $casts = [
     'cost_breakdown' => 'array',
@@ -24,15 +35,15 @@ class Order_item extends Model
         return $this->belongsTo(Product::class, 'product_id');
     }
 
-// public function costs(): HasMany
-// {
-//     return $this->hasMany(Cost::class, 'order_item_id');
-// }
+    public function costs(): HasMany
+    {
+        return $this->hasMany(Cost::class, 'order_item_id');
+    }
 
 
 public function getTotalCostAttribute()
 {
-    return $this->costs()->sum('amount');
+    return $this->costs()->sum('cost_price');
 }
 
 
@@ -40,8 +51,8 @@ public function getTotalCostAttribute()
 protected static function booted()
 {
     static::created(function ($orderItem) {
-        // Find templates for the selected product
-        $templates = \App\Models\Cost::where('product_id', $orderItem->product_id)
+        $templates = \App\Models\Cost::query()
+            ->where('product_id', $orderItem->product_id)
             ->whereNull('order_item_id')
             ->get();
 
@@ -49,6 +60,8 @@ protected static function booted()
             $orderItem->costs()->create([
                 'name_ar' => $template->name_ar,
                 'name_en' => $template->name_en,
+                'description_ar' => $template->description_ar,
+                'description_en' => $template->description_en,
                 'cost_price' => $template->cost_price,
                 'currency' => $template->currency,
                 'cost_type' => $template->cost_type,

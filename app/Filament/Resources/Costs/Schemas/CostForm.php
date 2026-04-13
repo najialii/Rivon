@@ -66,6 +66,13 @@ class CostForm
                             ->required()
                             ->native(false)->columnSpan(2),
 
+                        Select::make('expense_account_id')
+                            ->label('Expense Account')
+                            ->relationship('expenseAccount', 'name_en')
+                            ->searchable()
+                            ->preload()
+                            ->columnSpan(2),
+
                         Textarea::make('description_ar')
                             ->label('الوصف (عربي)')
                             ->columnSpanFull()

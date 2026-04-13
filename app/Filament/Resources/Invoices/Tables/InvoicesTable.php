@@ -50,6 +50,7 @@ class InvoicesTable
                     ->colors([
                         'secondary' => 'draft',
                         'primary' => 'sent',
+                        'info' => 'partial',
                         'success' => 'paid',
                         'warning' => 'overdue',
                         'danger' => 'cancelled',
@@ -57,10 +58,17 @@ class InvoicesTable
 
                 TextColumn::make('total_amount')
                     ->label('Total')
-                    ->money('usd', true)
+                    ->money(fn ($record) => $record->currency ?? 'USD')
                     ->sortable()
                     ->alignCenter()
                     ->weight('bold'),
+
+                TextColumn::make('amount_paid')
+                    ->label('Paid')
+                    ->money(fn ($record) => $record->currency ?? 'USD')
+                    ->sortable()
+                    ->alignCenter()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('currency')
                     ->label('Currency')
@@ -73,6 +81,7 @@ class InvoicesTable
                     ->options([
                         'draft' => 'Draft',
                         'sent' => 'Sent',
+                        'partial' => 'Partially Paid',
                         'paid' => 'Paid',
                         'overdue' => 'Overdue',
                         'cancelled' => 'Cancelled',
@@ -86,8 +95,9 @@ class InvoicesTable
                 Tables\Filters\SelectFilter::make('currency')
                     ->options([
                         'USD' => 'USD',
-                        'EUR' => 'EUR',
-                        'GBP' => 'GBP',
+                        'SDG' => 'SDG',
+                        'AED' => 'AED',
+                        'EGP' => 'EGP',
                     ]),
             ])
             ->recordActions([

@@ -10,7 +10,8 @@ class InvoiceService
 {
     public static function convertOrderToInvoice(Order $order): Invoice
     {
-        // Create invoice from order
+        $order->loadMissing('order_items.product');
+
         $invoice = Invoice::create([
             'invoice_number' => (new Invoice())->generateInvoiceNumber(),
             'customer_id' => $order->customer_id,
@@ -23,16 +24,19 @@ class InvoiceService
             'notes' => "Generated from Order #{$order->id}",
         ]);
 
-        // Create invoice item from order
-        InvoiceItem::create([
-            'invoice_id' => $invoice->id,
-            'description' => $order->product->name ?? 'Product',
-            'quantity' => $order->quantity,
-            'unit_price' => $order->total_price / $order->quantity,
-            'subtotal' => $order->total_price,
-        ]);
+        foreach ($order->order_items as $orderItem) {
+            $quantity = (float) $orderItem->quantity;
+            $unitPrice = $quantity > 0 ? ((float) $orderItem->price) : 0;
 
-        // Refresh totals to calculate subtotal, tax, and total
+            InvoiceItem::create([
+                'invoice_id' => $invoice->id,
+                'description' => $orderItem->product?->name_en ?? "Product #{$orderItem->product_id}",
+                'quantity' => $quantity,
+                'unit_price' => $unitPrice,
+                'subtotal' => $quantity * $unitPrice,
+            ]);
+        }
+
         $invoice->refreshTotals();
 
         return $invoice;
@@ -40,23 +44,27 @@ class InvoiceService
 
     public static function updateInvoiceFromOrder(Invoice $invoice, Order $order): void
     {
-        // Update invoice basic info
+        $order->loadMissing('order_items.product');
+
         $invoice->update([
             'customer_id' => $order->customer_id,
             'notes' => "Updated from Order #{$order->id}",
         ]);
 
-        // Update or create invoice item
-        $invoiceItem = $invoice->items()->first();
-        if ($invoiceItem) {
-            $invoiceItem->update([
-                'description' => $order->product->name ?? 'Product',
-                'quantity' => $order->quantity,
-                'unit_price' => $order->total_price / $order->quantity,
+        $invoice->items()->delete();
+
+        foreach ($order->order_items as $orderItem) {
+            $quantity = (float) $orderItem->quantity;
+            $unitPrice = $quantity > 0 ? ((float) $orderItem->price) : 0;
+
+            $invoice->items()->create([
+                'description' => $orderItem->product?->name_en ?? "Product #{$orderItem->product_id}",
+                'quantity' => $quantity,
+                'unit_price' => $unitPrice,
+                'subtotal' => $quantity * $unitPrice,
             ]);
         }
 
-        // Refresh totals
         $invoice->refreshTotals();
     }
 }

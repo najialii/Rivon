@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Services\FinanceService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -19,6 +18,7 @@ class Invoice extends Model
         'tax_total',
         'tax_percentage',
         'total_amount',
+        'amount_paid',
         'currency', 
         'status',
         'notes'
@@ -31,23 +31,32 @@ class Invoice extends Model
         'tax_total' => 'decimal:2',
         'tax_percentage' => 'decimal:2',
         'total_amount' => 'decimal:2',
+        'amount_paid' => 'decimal:2',
     ];
 
     protected static function booted()
     {
-        static::updated(function ($invoice) {
-            // Create journal entry when invoice status changes to 'paid'
-            if ($invoice->wasChanged('status') && $invoice->status === 'paid') {
-                FinanceService::processTransaction(
-                    reference: $invoice,
-                    debitAccountId: 1, // Cash on Hand - you may want to make this configurable
-                    creditAccountId: 2, // Sales Revenue - you may want to make this configurable
-                    amount: $invoice->total_amount,
-                    description: "Invoice #{$invoice->invoice_number} payment",
-                    currency: $invoice->currency
-                );
-            }
-        });
+        static::created(function (self $invoice) {
+    FinanceService::postTransaction(
+        reference: $invoice,
+        event: 'invoice_issued',
+        entryDate: $invoice->issue_date ?? now(),
+        currency: $invoice->currency,
+        memoEn: "Invoice {$invoice->invoice_number}",
+        lines: [
+            [
+                'account_code' => '1200', // Accounts Receivable (Asset)
+                'debit' => (float) $invoice->total_amount,
+                'credit' => 0,
+            ],
+            [
+                'account_code' => '4000', // Sales Revenue (Income)
+                'debit' => 0,
+                'credit' => (float) $invoice->total_amount,
+            ],
+        ],
+    );
+});
     }
 
     public function order()
@@ -65,12 +74,26 @@ class Invoice extends Model
         return $this->hasMany(InvoiceItem::class);
     }
 
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
     public function refreshTotals()
     {
-        $this->load('items');
+        $this->loadMissing('items.taxRate');
         
-        $subtotal = $this->items->sum('subtotal');
-        $taxTotal = $subtotal * ($this->tax_percentage / 100);
+        $subtotal = (float) $this->items->sum('subtotal');
+
+        $defaultTaxRate = (float) ($this->tax_percentage ?? 0);
+        $taxTotal = 0.0;
+
+        foreach ($this->items as $item) {
+            $lineSubtotal = (float) $item->subtotal;
+            $rate = $item->taxRate ? (float) $item->taxRate->rate : $defaultTaxRate;
+            $taxTotal += $lineSubtotal * ($rate / 100);
+        }
+
         $totalAmount = $subtotal + $taxTotal;
 
         $this->update([

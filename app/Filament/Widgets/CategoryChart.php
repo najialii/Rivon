@@ -6,6 +6,10 @@ use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
 class CategoryChart extends ApexChartWidget
 {
+
+protected static ?int $sort = 2;
+
+
     protected static ?string $chartId = 'categoryChart';
 
     protected static ?string $heading = 'Sales by Category';

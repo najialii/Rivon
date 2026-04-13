@@ -7,6 +7,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Tables\Columns\BadgeColumn;
 
 class JEntriesTable
 {
@@ -25,33 +26,42 @@ class JEntriesTable
                     ->date()
                     ->sortable(),
 
-                TextColumn::make('account.name_en')
-                    ->label('Account')
-                    ->searchable(),
+                BadgeColumn::make('status')
+                    ->label('Status')
+                    ->colors([
+                        'secondary' => 'draft',
+                        'success' => 'posted',
+                        'danger' => 'voided',
+                    ]),
 
-                TextColumn::make('debit')
+                TextColumn::make('lines_count')
+                    ->label('Lines')
+                    ->badge()
+                    ->color('gray'),
+
+                TextColumn::make('lines_sum_debit')
                     ->label('Debit')
-                    ->money(fn ($record) => $record->currency ?? 'USD')
+                    ->money(fn ($record) => $record->currency)
                     ->color('success')
                     ->alignEnd(),
 
-                TextColumn::make('credit')
+                TextColumn::make('lines_sum_credit')
                     ->label('Credit')
-                    ->money(fn ($record) => $record->currency ?? 'USD')
+                    ->money(fn ($record) => $record->currency)
                     ->color('danger')
                     ->alignEnd(),
 
-                TextColumn::make('reference_type')
-                    ->label('Source')
-                    ->badge()
-                    ->color('gray'),
+                TextColumn::make('memo_en')
+                    ->label('Memo')
+                    ->limit(30)
+                    ->toggleable(isToggledHiddenByDefault: false),
                     
             ])
             ->filters([
-                // Add filters for Date and Account here
+                //
             ])
             ->actions([
-                // EditAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
                 BulkActionGroup::make([

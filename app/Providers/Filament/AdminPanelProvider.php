@@ -58,91 +58,174 @@ class AdminPanelProvider extends PanelProvider
             )
             ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
             ->favicon(asset('favicon.ico'))
+//Rivon
+            // ->colors([
+            //     // Your Original Color Scheme (Green Sage) - Complete with all keys
+            //     'primary' => [
+            //         50 => '#f3f6f5',
+            //         100 => '#e7edeb',
+            //         200 => '#c2d1ce',
+            //         300 => '#9db6b1',
+            //         400 => '#547f76',
+            //         500 => '#0a483b', // Your original primary
+            //         600 => '#094135',
+            //         700 => '#062b23',
+            //         800 => '#05201b',
+            //         900 => '#031612',
+            //         950 => '#020e0b', // Added missing 950 key
+            //     ],
+            //     // Updated Gray Scale for Dark Mode Support
+            //     'gray' => [
+            //         50 => '#f9fafb',   // Light backgrounds
+            //         100 => '#f3f4f6',  // Card backgrounds
+            //         200 => '#e5e7eb',  // Borders
+            //         300 => '#d1d5db',  // Hover states
+            //         400 => '#9ca3af',  // Disabled text
+            //         500 => '#6b7280',  // Secondary text
+            //         600 => '#4b5563',  // Primary text
+            //         700 => '#374151',  // Headings
+            //         800 => '#1f2937',  // Dark text
+            //         900 => '#111827',  // Darkest text
+            //         950 => '#030712', // Added missing 950 key
+            //     ],
+            //     // Modern SaaS Colors for actions - Complete with all keys
+            //     'success' => [
+            //         50 => '#ecfdf5',
+            //         100 => '#d1fae5',
+            //         200 => '#a7f3d0',
+            //         300 => '#6ee7b7',
+            //         400 => '#34d399',
+            //         500 => '#10b981',
+            //         600 => '#059669',
+            //         700 => '#047857',
+            //         800 => '#065f46',
+            //         900 => '#064e3b',
+            //         950 => '#022c22', // Added missing 950 key
+            //     ],
+            //     'warning' => [
+            //         50 => '#fffbeb',
+            //         100 => '#fef3c7',
+            //         200 => '#fde68a',
+            //         300 => '#fcd34d',
+            //         400 => '#fbbf24',
+            //         500 => '#f59e0b',
+            //         600 => '#d97706',
+            //         700 => '#b45309',
+            //         800 => '#92400e',
+            //         900 => '#78350f',
+            //         950 => '#451a03', // Added missing 950 key
+            //     ],
+            //     'danger' => [
+            //         50 => '#fff1f2',
+            //         100 => '#ffe4e6',
+            //         200 => '#fecdd3',
+            //         300 => '#fda4af',
+            //         400 => '#fb7185',
+            //         500 => '#f43f5e',
+            //         600 => '#e11d48',
+            //         700 => '#be123c',
+            //         800 => '#9f1239',
+            //         900 => '#881337',
+            //         950 => '#4c0519', // Added missing 950 key
+            //     ],
+            //     // Add other colors that might be used
+            //     'info' => [
+            //         50 => '#eff6ff',
+            //         100 => '#dbeafe',
+            //         200 => '#bfdbfe',
+            //         300 => '#93c5fd',
+            //         400 => '#60a5fa',
+            //         500 => '#3b82f6',
+            //         600 => '#2563eb',
+            //         700 => '#1d4ed8',
+            //         800 => '#1e40af',
+            //         900 => '#1e3a8a',
+            //         950 => '#172554', // Added missing 950 key
+            //     ],
+            // ])
 
             ->colors([
-                // Your Original Color Scheme (Green Sage) - Complete with all keys
-                'primary' => [
-                    50 => '#f3f6f5',
-                    100 => '#e7edeb',
-                    200 => '#c2d1ce',
-                    300 => '#9db6b1',
-                    400 => '#547f76',
-                    500 => '#0a483b', // Your original primary
-                    600 => '#094135',
-                    700 => '#062b23',
-                    800 => '#05201b',
-                    900 => '#031612',
-                    950 => '#020e0b', // Added missing 950 key
-                ],
-                // Updated Gray Scale for Dark Mode Support
-                'gray' => [
-                    50 => '#f9fafb',   // Light backgrounds
-                    100 => '#f3f4f6',  // Card backgrounds
-                    200 => '#e5e7eb',  // Borders
-                    300 => '#d1d5db',  // Hover states
-                    400 => '#9ca3af',  // Disabled text
-                    500 => '#6b7280',  // Secondary text
-                    600 => '#4b5563',  // Primary text
-                    700 => '#374151',  // Headings
-                    800 => '#1f2937',  // Dark text
-                    900 => '#111827',  // Darkest text
-                    950 => '#030712', // Added missing 950 key
-                ],
-                // Modern SaaS Colors for actions - Complete with all keys
-                'success' => [
-                    50 => '#ecfdf5',
-                    100 => '#d1fae5',
-                    200 => '#a7f3d0',
-                    300 => '#6ee7b7',
-                    400 => '#34d399',
-                    500 => '#10b981',
-                    600 => '#059669',
-                    700 => '#047857',
-                    800 => '#065f46',
-                    900 => '#064e3b',
-                    950 => '#022c22', // Added missing 950 key
-                ],
-                'warning' => [
-                    50 => '#fffbeb',
-                    100 => '#fef3c7',
-                    200 => '#fde68a',
-                    300 => '#fcd34d',
-                    400 => '#fbbf24',
-                    500 => '#f59e0b',
-                    600 => '#d97706',
-                    700 => '#b45309',
-                    800 => '#92400e',
-                    900 => '#78350f',
-                    950 => '#451a03', // Added missing 950 key
-                ],
-                'danger' => [
-                    50 => '#fff1f2',
-                    100 => '#ffe4e6',
-                    200 => '#fecdd3',
-                    300 => '#fda4af',
-                    400 => '#fb7185',
-                    500 => '#f43f5e',
-                    600 => '#e11d48',
-                    700 => '#be123c',
-                    800 => '#9f1239',
-                    900 => '#881337',
-                    950 => '#4c0519', // Added missing 950 key
-                ],
-                // Add other colors that might be used
-                'info' => [
-                    50 => '#eff6ff',
-                    100 => '#dbeafe',
-                    200 => '#bfdbfe',
-                    300 => '#93c5fd',
-                    400 => '#60a5fa',
-                    500 => '#3b82f6',
-                    600 => '#2563eb',
-                    700 => '#1d4ed8',
-                    800 => '#1e40af',
-                    900 => '#1e3a8a',
-                    950 => '#172554', // Added missing 950 key
-                ],
-            ])
+    // ezzya
+    'primary' => [
+        50 => '#eff6ff',
+        100 => '#dbeafe',
+        200 => '#bfdbfe',
+        300 => '#93c5fd',
+        400 => '#60a5fa',
+        500 => '#3b82f6', // The main action color
+        600 => '#2563eb',
+        700 => '#1d4ed8',
+        800 => '#1e40af',
+        900 => '#1e3a8a',
+        950 => '#172554',
+    ],
+    // Clean Neutral Grays
+    'gray' => [
+        50 => '#f9fafb',
+        100 => '#f3f4f6',
+        200 => '#e5e7eb',
+        300 => '#d1d5db',
+        400 => '#9ca3af',
+        500 => '#6b7280',
+        600 => '#4b5563',
+        700 => '#374151',
+        800 => '#1f2937',
+        900 => '#111827',
+        950 => '#030712',
+    ],
+    'success' => [
+        50 => '#f0fdf4',
+        100 => '#dcfce7',
+        200 => '#bbf7d0',
+        300 => '#86efac',
+        400 => '#4ade80',
+        500 => '#22c55e',
+        600 => '#16a34a',
+        700 => '#15803d',
+        800 => '#166534',
+        900 => '#14532d',
+        950 => '#052e16',
+    ],
+    'warning' => [
+        50 => '#fffbeb',
+        100 => '#fef3c7',
+        200 => '#fde68a',
+        300 => '#fcd34d',
+        400 => '#fbbf24',
+        500 => '#f59e0b',
+        600 => '#d97706',
+        700 => '#b45309',
+        800 => '#92400e',
+        900 => '#78350f',
+        950 => '#451a03',
+    ],
+    'danger' => [
+        50 => '#fef2f2',
+        100 => '#fee2e2',
+        200 => '#fecaca',
+        300 => '#fca5a5',
+        400 => '#f87171',
+        500 => '#ef4444',
+        600 => '#dc2626',
+        700 => '#b91c1c',
+        800 => '#991b1b',
+        900 => '#7f1d1d',
+        950 => '#450a0a',
+    ],
+    'info' => [
+        50 => '#f0f9ff',
+        100 => '#e0f2fe',
+        200 => '#bae6fd',
+        300 => '#7dd3fc',
+        400 => '#38bdf8',
+        500 => '#0ea5e9',
+        600 => '#0284c7',
+        700 => '#0369a1',
+        800 => '#075985',
+        900 => '#0c4a6e',
+        950 => '#082f49',
+    ],
+])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
@@ -151,10 +234,7 @@ class AdminPanelProvider extends PanelProvider
             ->font('Inter', 'Inter, ui-sans-serif, system-ui, sans-serif')
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
-                // AccountWidget::class,
-                // ProductStatsWidget::class,
-                // TopSellingProductsWidget::class,
-                // FilamentInfoWidget::class,
+
             ])
             ->middleware([
                 EncryptCookies::class,

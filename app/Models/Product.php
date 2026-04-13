@@ -13,7 +13,7 @@ class Product extends Model
     use HasFactory ,  LogsActivity;
 
     protected $fillable = ['sku', 'name_ar', 'brand_id', 'name_en',
-     'description_ar', 'description_en','type', 'orginal_price','currancy', 'wholesale_price', 'retail_price', 'img_path', 'category_id', 'measurement_unit', ' unit_quantity', 'unit_weight', "status"];
+     'description_ar', 'description_en','type', 'original_price','currency','wholesale_min_price', 'wholesale_price', 'retail_price', 'img_path', 'category_id', 'measurement_unit', ' unit_quantity', 'unit_weight', "status"];
 
     public function supplies()
     {
@@ -41,7 +41,7 @@ public function stockMovements()
 
 
 
-    public function costTemplates(): HasMany
+    public function costs(): HasMany
 {
     return $this->hasMany(Cost::class)->whereNull('order_item_id');
 }

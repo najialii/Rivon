@@ -25,10 +25,18 @@ class InvoiceForm
             ->components([
                 Section::make('Invoice Information')
                     ->schema([
+                        // TextInput::make('invoice_number')
+                        //     ->label('Invoice Number')
+                        //     ->default(fn () => (new \App\Models\Invoice())->generateInvoiceNumber()),
+
                         TextInput::make('invoice_number')
-                            ->label('Invoice Number')
-                            ->disabled()
-                            ->default(fn () => (new \App\Models\Invoice())->generateInvoiceNumber()),
+    ->label('Invoice Number')
+    ->placeholder('Enter the number from the printed invoice')
+    ->required()
+    ->unique(ignoreRecord: true)
+    ->helperText('Manual entry required. Match this to your paper records.')
+    ->validationAttribute('invoice number'),
+
 
                         Select::make('customer_id')
                             ->label('Customer')
@@ -49,28 +57,36 @@ class InvoiceForm
                                 return Order::where('customer_id', $customerId)
                                     ->whereDoesntHave('invoices')
                                     ->where('status', '!=', 'cancelled')
-                                    ->with('product')
+                                    ->withCount('order_items')
                                     ->get()
                                     ->mapWithKeys(function ($order) {
-                                        return [$order->id => "Order #{$order->id} - {$order->product->name_en} ({$order->quantity} x ${$order->total_price})"];
+                                        return [$order->id => "Order #{$order->id} - {$order->order_items_count} items - Total {$order->total_price}"];
                                     });
                             })
                             ->searchable()
                             ->reactive()
                             ->afterStateUpdated(function ($state, callable $get, callable $set) {
                                 if ($state) {
-                                    $order = Order::find($state);
+                                    $order = Order::with('order_items.product')->find($state);
                                     if ($order) {
-                                            $set('subtotal', $order->total_price);
-                                        $set('tax_total', $order->total_price * 0.10); // 10% tax
-                                        $set('total_amount', $order->total_price * 1.10);
+                                        $subtotal = $order->order_items->sum(function ($item) {
+                                            return ((float) $item->quantity) * ((float) $item->price);
+                                        });
+                                        $taxPercentage = (float) ($get('tax_percentage') ?? 0);
+                                        $taxTotal = $subtotal * ($taxPercentage / 100);
+                                        $totalAmount = $subtotal + $taxTotal;
                                         
-                                        // Add order as invoice item
-                                        $set('items', [[
-                                            'description' => $order->product->name_en,
-                                            'quantity' => $order->quantity,
-                                            'unit_price' => $order->total_price / $order->quantity,
-                                        ]]);
+                                        $set('subtotal', number_format($subtotal, 2, '.', ''));
+                                        $set('tax_total', number_format($taxTotal, 2, '.', ''));
+                                        $set('total_amount', number_format($totalAmount, 2, '.', ''));
+                                        
+                                        $set('items', $order->order_items->map(function ($item) {
+                                            return [
+                                                'description' => $item->product?->name_en ?? "Product #{$item->product_id}",
+                                                'quantity' => (float) $item->quantity,
+                                                'unit_price' => (float) $item->price,
+                                            ];
+                                        })->values()->all());
                                     }
                                 }
                             }),
@@ -102,6 +118,7 @@ class InvoiceForm
                             ->options([
                                 'draft' => 'Draft',
                                 'sent' => 'Sent',
+                                'partial' => 'Partially Paid',
                                 'paid' => 'Paid',
                                 'overdue' => 'Overdue',
                                 'cancelled' => 'Cancelled',
@@ -115,7 +132,15 @@ class InvoiceForm
                     ->schema([
                         Repeater::make('items')
                             ->label('Items')
+                            ->relationship()
                             ->schema([
+                                Select::make('tax_rate_id')
+                                    ->label('Tax Rate')
+                                    ->relationship('taxRate', 'name')
+                                    ->searchable()
+                                    ->preload()
+                                    ->columnSpan(1),
+
                                 TextInput::make('description')
                                     ->label('Description')
                                     ->required()
@@ -150,12 +175,31 @@ class InvoiceForm
                                     ->numeric()
                                     ->step(0.01)
                                     ->disabled()
-                                    ->dehydrated(false),
+                                    ->dehydrated(),
                             ])
-                            ->columns(4)
+                            ->columns(6)
                             ->collapsible()
                             ->itemLabel(fn (array $state): ?string => $state['description'] ?? null)
-                            ->defaultItems(1),
+                            ->defaultItems(1)
+                            ->live()
+                            ->afterStateUpdated(function (callable $get, callable $set) {
+                                $items = $get('items') ?? [];
+                                $subtotal = 0.0;
+
+                                foreach ($items as $item) {
+                                    $quantity = (float) ($item['quantity'] ?? 0);
+                                    $unitPrice = (float) ($item['unit_price'] ?? 0);
+                                    $subtotal += $quantity * $unitPrice;
+                                }
+
+                                $taxPercentage = (float) ($get('tax_percentage') ?? 0);
+                                $taxTotal = $subtotal * ($taxPercentage / 100);
+                                $totalAmount = $subtotal + $taxTotal;
+
+                                $set('subtotal', number_format($subtotal, 2, '.', ''));
+                                $set('tax_total', number_format($taxTotal, 2, '.', ''));
+                                $set('total_amount', number_format($totalAmount, 2, '.', ''));
+                            }),
                     ])
                     ->collapsible(),
 
@@ -181,14 +225,14 @@ class InvoiceForm
                             ->numeric()
                             ->step(0.01)
                             ->disabled()
-                            ->dehydrated(false),
+                            ->dehydrated(),
 
                         TextInput::make('tax_total')
                             ->label('Tax Total')
                             ->numeric()
                             ->step(0.01)
                             ->disabled()
-                            ->dehydrated(false),
+                            ->dehydrated(),
 
                         TextInput::make('total_amount')
                             ->label('Total Amount')
@@ -196,7 +240,7 @@ class InvoiceForm
                             ->step(0.01)
                             ->required()
                             ->disabled()
-                            ->dehydrated(false),
+                            ->dehydrated(),
                     ])
                     ->columns(2),
 
@@ -210,3 +254,25 @@ class InvoiceForm
             ]);
     }
 }
+
+
+
+// 1. The subtotal format mismatch
+
+// In your Repeater, you are using number_format($subtotal, 2). This adds a comma (e.g., 1,250.00).
+
+//     The Problem: HTML numeric inputs and database decimal columns hate commas. If a user tries to save an invoice over 1,000, the database will save it as 1.00 because the comma breaks the number.
+
+//     The Fix: Always use number_format($value, 2, '.', '') (no thousands separator) or just round it.
+
+// 2. The order_id state "Ghosting"
+
+// When you select an order, you set the items. But if the user selects the wrong order and then changes it to a different order, the items repeater will append or behave weirdly because Filament doesn't always "flush" the repeater state cleanly via $set.
+
+//     The Fix: You should set the items but also ensure the subtotal is recalculated immediately.
+
+// 3. The tax_total rounding bug
+
+// You are calculating tax_total in multiple places. If a user manually changes an item quantity, the Repeater's afterStateUpdated runs, but if they change the tax_percentage, a different logic runs.
+
+//     The Fix: Centralize the "Total" calculation into a single private function or ensure the logic is identical.

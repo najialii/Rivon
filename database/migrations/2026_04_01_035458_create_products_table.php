@@ -21,9 +21,9 @@ return new class extends Migration
             $table->text('description_ar')->nullable();
             $table->text('description_en')->nullable();
             $table->string('img_path')->nullable();
-            $table->decimal('original_price', 10, 2);
-            $table->decimal('wholesale_price', 10, 2);
-            $table->decimal('retail_price', 10, 2);
+            $table->decimal('original_price', 10, 2)->default(0);
+            $table->decimal('wholesale_price', 10, 2)->default(0);
+            $table->decimal('retail_price', 10, 2)->default(0);
             $table->string('currency');
             $table->decimal('wholesale_min_price', 10, 2);
             $table->string('measurement_unit')->nullable();

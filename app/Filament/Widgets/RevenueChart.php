@@ -9,6 +9,7 @@ class RevenueChart extends ApexChartWidget
     protected static ?string $chartId = 'revenueChart';
 
     protected static ?string $heading = 'Revenue Analysis';
+protected static ?int $sort = 3;
 
     protected function getOptions(): array
     {

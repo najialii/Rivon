@@ -200,8 +200,32 @@ class AccountSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'name_ar' => 'مصروفات الرواتب',
+                'name_en' => 'Salaries Expense',
+                'account_type' => 'expense',
+                'code' => '5040',
+                'description_ar' => 'مصروفات الرواتب والأجور',
+                'description_en' => 'Salaries and wages expense',
+                'currency' => 'USD',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ];
 
         Account::insert($accounts);
+
+        $byCode = Account::query()->pluck('id', 'code');
+
+        Account::query()->where('code', '1010')->update(['parent_id' => $byCode['1000'] ?? null]);
+        Account::query()->where('code', '1020')->update(['parent_id' => $byCode['1000'] ?? null]);
+
+        Account::query()->where('code', '4010')->update(['parent_id' => $byCode['4000'] ?? null]);
+        Account::query()->where('code', '4020')->update(['parent_id' => $byCode['4000'] ?? null]);
+
+        Account::query()->where('code', '5010')->update(['parent_id' => $byCode['5000'] ?? null]);
+        Account::query()->where('code', '5020')->update(['parent_id' => $byCode['5000'] ?? null]);
+        Account::query()->where('code', '5030')->update(['parent_id' => $byCode['5000'] ?? null]);
+        Account::query()->where('code', '5040')->update(['parent_id' => $byCode['5000'] ?? null]);
     }
 }

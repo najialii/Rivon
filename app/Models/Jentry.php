@@ -10,6 +10,7 @@ class Jentry extends Model
 {
     //
    protected $fillable = [
+            'journal_transaction_id',
             'account_id', 
             'reference_type', 
             'reference_id', 
@@ -24,6 +25,11 @@ class Jentry extends Model
            public function account(): BelongsTo
         {
             return $this->belongsTo(Account::class);
+        }
+
+        public function transaction(): BelongsTo
+        {
+            return $this->belongsTo(JournalTransaction::class, 'journal_transaction_id');
         }
 
         public function reference()

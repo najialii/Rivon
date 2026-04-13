@@ -10,8 +10,10 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Components\Grid;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Repeater;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 
 
 class JEntriesForm
@@ -28,7 +30,7 @@ class JEntriesForm
                         TextInput::make('entry_number')
                             ->label('Entry #')
                             ->default('JE-' . date('Ymd') . '-' . strtoupper(str()->random(4)))
-                            ->readonly()
+                            ->disabled()
                             ->required(),
 
                         DatePicker::make('entry_date')
@@ -48,52 +50,105 @@ class JEntriesForm
                             ->required(),
                     ]),
 
-                Section::make('Account & Reference')
+                Section::make('Memo')
                     ->columnSpanFull()
-                    ->columns(2)
                     ->schema([
-                        Select::make('account_id')
-                            ->label('Ledger Account')
-                            ->relationship('account', 'name_en')
-                            ->searchable()
-                            ->preload()
-                            ->required(),
+                        Textarea::make('memo_en')
+                            ->label('Memo (EN)')
+                            ->rows(2)
+                            ->columnSpanFull(),
 
-                        Grid::make(2)
-                            ->schema([
-                                Select::make('reference_type')
-                                    ->label('Source Type')
-                                    ->options([
-                                        'supply' => 'Supply Shipment',
-                                        'sale' => 'Customer Sale',
-                                        'cost' => 'Operational Cost',
-                                        'manual' => 'Manual Adjustment',
-                                    ])
-                                    ->required()
-                                    ->native(false),
-
-                                TextInput::make('reference_id')
-                                    ->label('Reference ID / ID #')
-                                    ->required(),
-                            ]),
-
-                        TextInput::make('debit')
-                            ->label('Debit Amount')
-                            ->numeric()
-                            ->default(0)
-                            ->prefix('$'),
-
-                        TextInput::make('credit')
-                            ->label('Credit Amount')
-                            ->numeric()
-                            ->default(0)
-                            ->prefix('$'),
-
-                        Textarea::make('description')
-                            ->label('Internal Note')
-                            ->columnSpanFull()
-                            ->rows(2),
+                        Textarea::make('memo_ar')
+                            ->label('Memo (AR)')
+                            ->rows(2)
+                            ->columnSpanFull(),
                     ])
+                    ->columns(2),
+
+                Section::make('Lines')
+                    ->columnSpanFull()
+                    ->schema([
+                        Repeater::make('lines')
+                            ->relationship('lines')
+                            ->schema([
+                                Select::make('account_id')
+                                    ->label('Account')
+                                    ->relationship('account', 'name_en')
+                                    ->searchable()
+                                    ->preload()
+                                    ->required()
+                                    ->columnSpan(4),
+
+                                TextInput::make('debit')
+                                    ->numeric()
+                                    ->default(0)
+                                    ->required()
+                                    ->live()
+                                    ->afterStateUpdated(function (Set $set, $state) {
+                                        if ((float) $state > 0) {
+                                            $set('credit', 0);
+                                        }
+                                    })
+                                    ->columnSpan(2),
+
+                                TextInput::make('credit')
+                                    ->numeric()
+                                    ->default(0)
+                                    ->required()
+                                    ->live()
+                                    ->afterStateUpdated(function (Set $set, $state) {
+                                        if ((float) $state > 0) {
+                                            $set('debit', 0);
+                                        }
+                                    })
+                                    ->columnSpan(2),
+
+                                TextInput::make('description_en')
+                                    ->label('Line Note (EN)')
+                                    ->columnSpan(4),
+
+                                TextInput::make('description_ar')
+                                    ->label('Line Note (AR)')
+                                    ->columnSpan(4),
+
+                                TextInput::make('currency')
+                                    ->disabled()
+                                    ->dehydrated(true)
+                                    ->default(fn (Get $get) => $get('../../currency'))
+                                    ->columnSpan(2),
+                            ])
+                            ->columns(8)
+                            ->defaultItems(2)
+                            ->minItems(2)
+                            ->live()
+                            ->afterStateUpdated(function (Get $get, Set $set) {
+                                $lines = $get('lines') ?? [];
+
+                                $totalDebit = 0;
+                                $totalCredit = 0;
+
+                                foreach ($lines as $line) {
+                                    $totalDebit += (float) ($line['debit'] ?? 0);
+                                    $totalCredit += (float) ($line['credit'] ?? 0);
+                                }
+
+                                $set('total_debit', number_format($totalDebit, 2, '.', ''));
+                                $set('total_credit', number_format($totalCredit, 2, '.', ''));
+                            }),
+                    ]),
+
+                Section::make('Totals')
+                    ->columnSpanFull()
+                    ->schema([
+                        TextInput::make('total_debit')
+                            ->disabled()
+                            ->dehydrated(false),
+
+                        TextInput::make('total_credit')
+                            ->disabled()
+                            ->dehydrated(false),
+                    ])
+                    ->columns(2),
             ]);
     }
 }

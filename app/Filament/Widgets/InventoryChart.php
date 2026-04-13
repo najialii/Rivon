@@ -9,6 +9,7 @@ class InventoryChart extends ApexChartWidget
     protected static ?string $chartId = 'inventoryChart';
 
     protected static ?string $heading = 'Inventory by Category';
+protected static ?int $sort = 2;
 
     protected function getOptions(): array
     {

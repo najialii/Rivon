@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class InvoiceItem extends Model
 {
-    protected $fillable = ['invoice_id', 'description', 'quantity', 'unit_price', 'subtotal'];
+    protected $fillable = ['invoice_id', 'tax_rate_id', 'description', 'quantity', 'unit_price', 'subtotal'];
 
     protected $casts = [
         'quantity' => 'decimal:2',
@@ -44,10 +44,10 @@ class InvoiceItem extends Model
         return number_format($this->subtotal, 2);
     }
 
-    public function taxRate()
-{
-    return $this->belongsTo(TaxRate::class);
-}
+    public function taxRate(): BelongsTo
+    {
+        return $this->belongsTo(TaxRate::class);
+    }
 
     public function getFormattedUnitPriceAttribute()
     {
