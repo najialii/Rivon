@@ -41,9 +41,9 @@ class ProductForm
                                             ->label('SKU')
                                             ->unique(ignoreRecord: true),
 
-                                        TextInput::make('measurement_unit')
-                                            ->label('Measurement Unit')
-                                            ->placeholder('e.g., kg, box, pcs'),
+                                        // TextInput::make('measurement_unit')
+                                        //     ->label('Measurement Unit')
+                                        //     ->placeholder('e.g., kg, box, pcs'),
 
                                         Select::make('category_id')
                                             ->relationship('category', 'name_en')
@@ -65,7 +65,7 @@ class ProductForm
 
                                 Grid::make(3)
                                     ->schema([
-                                        TextInput::make('unit_type')
+                                        TextInput::make('measurement_unit')
                                             ->label('Unit Type')
                                             ->placeholder('e.g., Box, Carton')
                                             ->required(),

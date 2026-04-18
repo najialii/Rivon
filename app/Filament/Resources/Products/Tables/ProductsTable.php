@@ -2,15 +2,15 @@
 
 namespace App\Filament\Resources\Products\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
 use Filament\Tables;
+use Filament\Tables\Table;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ViewAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
 
 class ProductsTable
 {
@@ -21,85 +21,65 @@ class ProductsTable
                 ImageColumn::make('img_path')
                     ->label('')
                     ->square()
-                    ->visibility('public')
-                    ->disk('public')
                     ->size(50),
-
-                TextColumn::make('name_ar')
-                    ->label('المنتج')
-                    ->sortable()
-                    ->searchable()
-                    ->weight('bold')
-                    ->extraAttributes(['dir' => 'rtl']),
 
                 TextColumn::make('name_en')
                     ->label('Product Name')
+                    ->description(fn ($record) => $record->name_ar) // Shows Arabic under English
                     ->searchable()
                     ->sortable()
-                    ->color('gray'),
+                    ->weight('bold'),
 
-                TextColumn::make('category.name_ar')
-                    ->label('Category')
+                TextColumn::make('sku')
+                    ->label('SKU')
+                    ->searchable()
+                    ->toggleable(),
+
+                // --- FIXED UNIT COLUMNS ---
+                TextColumn::make('measurement_unit')
+                    ->label('Unit Type')
                     ->badge()
-                    ->color('primary')
+                    ->color('gray')
                     ->sortable(),
 
-                TextColumn::make('brand.name_en')
-                    ->label('Brand')
-                    ->searchable()
-                    ->sortable()
-                    ->color('primary'),
+                TextColumn::make('unit_quantity')
+                    ->label('Qty/Unit')
+                    ->suffix(' pcs') // Matching your form's suffix
+                    ->sortable(),
 
-                TextColumn::make('price.price')
+                TextColumn::make('unit_weight')
+                    ->label('Weight')
+                    ->suffix(' kg')
+                    ->toggleable(),
+                // --------------------------
+
+                TextColumn::make('retail_price')
                     ->label('Retail Price')
-                    ->money(fn ($record) => $record->price->currency ?? 'USD') 
+                    ->money(fn ($record) => $record->currency ?? 'USD')
                     ->sortable()
                     ->color('success')
                     ->weight('bold'),
 
-                TextColumn::make('price.wholesale_price')
-                    ->label('Wholesale')
-                    ->money(fn ($record) => $record->price->currency ?? 'USD')
-                    ->toggleable()
-                    ->color('warning'),
-
-                TextColumn::make('munit')
-                    ->label('Unit')
-                    ->toggleable(),
-
                 TextColumn::make('status')
-    ->label('Status')
-    ->badge()
-    ->formatStateUsing(fn ($state): string => match ((int) $state) {
-        0 => 'Inactive',
-        1 => 'Active',
-        2 => 'Archived',
-        default => 'Unknown',
-    })
-    ->color(fn ($state): string => match ((int) $state) {
-        0 => 'danger',
-        1 => 'success',
-        2 => 'gray',
-        default => 'gray',
-    })
-    ->toggleable(),
-
-                TextColumn::make('created_at')
-                    ->label('Added')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'active' => 'success',
+                        'inactive' => 'danger',
+                        'archived' => 'gray',
+                        default => 'gray',
+                    })
+                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('category_id')
-                    ->relationship('category', 'name_ar')
-                    ->label('Filter Category'),
+                    ->relationship('category', 'name_en')
+                    ->label('Category'),
             ])
             ->actions([
+                ViewAction::make(),
                 EditAction::make(),
                 DeleteAction::make(),
-                ViewAction::make(),
-
             ])
             ->bulkActions([
                 BulkActionGroup::make([
