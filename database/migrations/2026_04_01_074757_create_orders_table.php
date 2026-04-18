@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
-            $table->unsignedBigInteger('quantity');
             $table->foreignId('supplier_id')->nullable()->constrained('suppliers');
             $table->string('otype');
             $table->string('sale_type')->default('retail');

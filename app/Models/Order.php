@@ -12,7 +12,6 @@ class Order extends Model
 
     protected $casts = [
         'order_date' => 'date',
-        'quantity' => 'decimal:2',
         'total_price' => 'decimal:2',
         'sale_type',
         'source',
